@@ -1,0 +1,46 @@
+---
+abstract: 'A composable RESTful JSON+HAL API to DBIx::Class schemas using roles, Web::Machine and Path::Router'
+author:
+  - 'Tim Bunce <Tim.Bunce@pobox.com>'
+build_requires:
+  DBIx::Class: '0'
+  Module::Pluggable: '0'
+  Sort::Key: '0'
+  Test::DBIx::Class: '0'
+  Test::HTTP::Response: '0'
+  Test::More: '0.98'
+  Test::Most: '0'
+  Test::Roo: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '6.30'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: WebAPI-DBIC
+requires:
+  Carp: '0'
+  HTTP::Throwable: '0'
+  JSON::MaybeXS: '0'
+  List::Util: '0'
+  Module::Runtime: '0'
+  Moo: '0'
+  Moose: '0'
+  Path::Router: '0'
+  Plack: '0'
+  Plack::App::File: '0'
+  Plack::App::Path::Router: '0'
+  Scalar::Util: '0'
+  Sub::Exporter: '0'
+  Sub::Quote: '0'
+  Try::Tiny: '0'
+  URI: '0'
+  Web::Machine: '0'
+  namespace::clean: '0'
+resources:
+  bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
+  homepage: https://github.com/timbunce/WebAPI-DBIC
+  repository: https://github.com/timbunce/WebAPI-DBIC.git
+version: '0.001000'
