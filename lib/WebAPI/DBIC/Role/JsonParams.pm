@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Role::JsonParams;
-$WebAPI::DBIC::Role::JsonParams::VERSION = '0.001000'; # TRIAL
+$WebAPI::DBIC::Role::JsonParams::VERSION = '0.001003';
 # provides a param() method that returns query parameters
 # except that any parameters named foo~json have their values
 # JSON decoded, so they can be arbitrary data structures.
@@ -78,7 +78,7 @@ WebAPI::DBIC::Role::JsonParams
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericItemInvoke;
-$WebAPI::DBIC::Resource::GenericItemInvoke::VERSION = '0.001000'; # TRIAL
+$WebAPI::DBIC::Resource::GenericItemInvoke::VERSION = '0.001003';
 use Moo;
 use namespace::clean;
 
@@ -28,7 +28,7 @@ WebAPI::DBIC::Resource::GenericItemInvoke
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 AUTHOR
 

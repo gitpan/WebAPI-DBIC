@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Base;
-$WebAPI::DBIC::Resource::Base::VERSION = '0.001000'; # TRIAL
+$WebAPI::DBIC::Resource::Base::VERSION = '0.001003';
 
 use Moo;
 extends 'Web::Machine::Resource';
@@ -18,7 +18,7 @@ WebAPI::DBIC::Resource::Base
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 DESCRIPTION
 

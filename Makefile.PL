@@ -26,7 +26,6 @@ my %WriteMakefileArgs = (
     "List::Util" => 0,
     "Module::Runtime" => 0,
     "Moo" => 0,
-    "Moose" => 0,
     "Path::Router" => 0,
     "Plack" => 0,
     "Plack::App::File" => 0,
@@ -37,7 +36,8 @@ my %WriteMakefileArgs = (
     "Try::Tiny" => 0,
     "URI" => 0,
     "Web::Machine" => 0,
-    "namespace::clean" => 0
+    "namespace::clean" => 0,
+    "parent" => 0
   },
   "TEST_REQUIRES" => {
     "DBIx::Class" => 0,
@@ -49,7 +49,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "Test::Roo" => 0
   },
-  "VERSION" => "0.001000",
+  "VERSION" => "0.001003",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -65,7 +65,6 @@ my %FallbackPrereqs = (
   "Module::Pluggable" => 0,
   "Module::Runtime" => 0,
   "Moo" => 0,
-  "Moose" => 0,
   "Path::Router" => 0,
   "Plack" => 0,
   "Plack::App::File" => 0,
@@ -82,7 +81,8 @@ my %FallbackPrereqs = (
   "Try::Tiny" => 0,
   "URI" => 0,
   "Web::Machine" => 0,
-  "namespace::clean" => 0
+  "namespace::clean" => 0,
+  "parent" => 0
 );
 
 

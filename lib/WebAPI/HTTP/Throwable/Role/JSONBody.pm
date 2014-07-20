@@ -1,6 +1,6 @@
 package WebAPI::HTTP::Throwable::Role::JSONBody;
-$WebAPI::HTTP::Throwable::Role::JSONBody::VERSION = '0.001000'; # TRIAL
-use Moose::Role;
+$WebAPI::HTTP::Throwable::Role::JSONBody::VERSION = '0.001003';
+use Moo::Role;
 
 sub body { return shift->message }
 
@@ -15,7 +15,6 @@ sub body_headers {
 
 sub as_string { return shift->body }
 
-no Moose::Role;
 1;
 
 __END__
@@ -30,7 +29,7 @@ WebAPI::HTTP::Throwable::Role::JSONBody
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 OVERVIEW
 

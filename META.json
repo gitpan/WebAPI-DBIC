@@ -32,7 +32,6 @@
             "List::Util" : "0",
             "Module::Runtime" : "0",
             "Moo" : "0",
-            "Moose" : "0",
             "Path::Router" : "0",
             "Plack" : "0",
             "Plack::App::File" : "0",
@@ -43,7 +42,8 @@
             "Try::Tiny" : "0",
             "URI" : "0",
             "Web::Machine" : "0",
-            "namespace::clean" : "0"
+            "namespace::clean" : "0",
+            "parent" : "0"
          }
       },
       "test" : {
@@ -59,7 +59,7 @@
          }
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/timbunce/WebAPI-DBIC/issues"
@@ -71,6 +71,6 @@
          "web" : "https://github.com/timbunce/WebAPI-DBIC"
       }
    },
-   "version" : "0.001000"
+   "version" : "0.001003"
 }
 

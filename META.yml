@@ -27,7 +27,6 @@ requires:
   List::Util: '0'
   Module::Runtime: '0'
   Moo: '0'
-  Moose: '0'
   Path::Router: '0'
   Plack: '0'
   Plack::App::File: '0'
@@ -39,8 +38,9 @@ requires:
   URI: '0'
   Web::Machine: '0'
   namespace::clean: '0'
+  parent: '0'
 resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.001000'
+version: '0.001003'

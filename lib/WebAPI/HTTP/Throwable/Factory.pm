@@ -1,8 +1,13 @@
 package WebAPI::HTTP::Throwable::Factory;
-$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001000'; # TRIAL
+$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001003';
+use strict;
+use warnings;
+
 use parent 'HTTP::Throwable::Factory';
+
 use Carp qw(carp cluck);
 use JSON::MaybeXS qw(JSON);
+
 
 sub extra_roles {
     return (
@@ -45,7 +50,7 @@ WebAPI::HTTP::Throwable::Factory
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 AUTHOR
 

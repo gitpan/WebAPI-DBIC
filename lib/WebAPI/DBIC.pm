@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.001000'; # TRIAL
+$WebAPI::DBIC::VERSION = '0.001003';
 __END__
 
 =pod
@@ -12,7 +12,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 DESCRIPTION
 

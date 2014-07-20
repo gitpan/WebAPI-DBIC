@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBICParams;
-$WebAPI::DBIC::Resource::Role::DBICParams::VERSION = '0.001000'; # TRIAL
+$WebAPI::DBIC::Resource::Role::DBICParams::VERSION = '0.001003';
 use Carp;
 use Scalar::Util qw(blessed);
 
@@ -240,7 +240,7 @@ WebAPI::DBIC::Resource::Role::DBICParams
 
 =head1 VERSION
 
-version 0.001000
+version 0.001003
 
 =head1 AUTHOR
 
