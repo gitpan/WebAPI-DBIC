@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritable;
-$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.001003';
+$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.001004';
 # Based on https://github.com/frioux/drinkup
 
 use Devel::Dwarn;
@@ -164,7 +164,7 @@ WebAPI::DBIC::Resource::Role::SetWritable
 
 =head1 VERSION
 
-version 0.001003
+version 0.001004
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBICAuth;
-$WebAPI::DBIC::Resource::Role::DBICAuth::VERSION = '0.001003';
+$WebAPI::DBIC::Resource::Role::DBICAuth::VERSION = '0.001004';
 use Carp qw(confess);
 use Try::Tiny;
 
@@ -85,7 +85,7 @@ WebAPI::DBIC::Resource::Role::DBICAuth
 
 =head1 VERSION
 
-version 0.001003
+version 0.001004
 
 =head1 AUTHOR
 

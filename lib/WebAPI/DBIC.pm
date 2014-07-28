@@ -1,5 +1,9 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.001003';
+$WebAPI::DBIC::VERSION = '0.001004';
+use strict; # keep our kwalitee up!
+use warnings;
+1;
+
 __END__
 
 =pod
@@ -12,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.001003
+version 0.001004
 
 =head1 DESCRIPTION
 
@@ -33,7 +37,7 @@ WebAPI::DBIC features include:
 
 * A built-in copy of the generic HAL API browser application
 
-* An example command-line utility that gives you an instant web service for any DBIx::Class schema
+* An example .psgi file that gives you an instant web service for any DBIx::Class schema
 
 =head2 HAL - Hypertext Application Language
 
@@ -57,7 +61,9 @@ See L<http://stateless.co/hal_specification.html> for more details.
 =head2 Web::Machine
 
 The L<Web::Machine> module provides a RESTful web framework modeled as a formal
-state machine. This is a rigorous and powerful approach, originally developed in Haskel and since ported to 
+state machine. This is a rigorous and powerful approach, originally developed
+in Haskel and since ported to many other languages.
+
 See L<https://raw.githubusercontent.com/basho/webmachine/develop/docs/http-headers-status-v3.png>
 for an image of the state machine.
 
@@ -95,13 +101,42 @@ WebAPI::DBIC - A composable RESTful JSON+HAL API to DBIx::Class schemas using ro
 
 =head1 STATUS
 
-The WebAPI::DBIC code has been in production use for over a year, however it's
+The WebAPI::DBIC code has been in production use since early 2013, however it's
 only recently been open sourced (July 2014) so it's still lacking in
 documentation, tests etc.
 
 It's also likely to undergo a period of refactoring now there are more
 developers contributing and the code is being applied to more domains.
+
 Interested? Please get involved! See L</HOW TO GET HELP> below.
+
+=head1 QUICK START
+
+To demonstrate the rich functionality that the combination of DBIx::Class and
+HAL provides, the WebAPI::DBIC framework includes a ready-to-use L<Plack> .psgi
+file that provides an instant web data service for any DBIx::Class schema.
+
+    $ git clone https://github.com/timbunce/WebAPI-DBIC.git
+    $ cd WebAPI-DBIC
+    $ cpanm Module::CPANfile
+    $ cpanm --installdeps .    # this may take a while
+
+    $ export WEBAPI_DBIC_SCHEMA=DummyLoadedSchema
+    $ plackup -Ilib -It/lib webapi-dbic-any.psgi
+    ... open a web browser on port 5000 to browse the API
+
+Then try it out with your own schema:
+
+    $ export WEBAPI_DBIC_SCHEMA=Foo::Bar     # your own schema
+    $ export WEBAPI_DBIC_HTTP_AUTH_TYPE=none # recommended
+    $ export DBI_DSN=dbi:Driver:...          # your own database
+    $ export DBI_USER=... # for initial connection, if needed
+    $ export DBI_PASS=... # for initial connection, if needed
+    $ plackup -Ilib webapi-dbic-any.psgi
+    ... open a web browser on port 5000 to browse your new API
+
+The API is read-only by default. To enable PUT, POST, DELETE etc, set the
+C<WEBAPI_DBIC_WRITABLE> environment variable.
 
 =head1 MODULES
 
@@ -304,7 +339,7 @@ The "relation" links describe the relationships this resource has with other res
 
 TBD Currently only 1-1 relationships (e.g., belongs_to) are included. Also see L</prefetch>.
 
-=head2 GET Item Optional Parameters
+=head2 GET Item - Optional Parameters
 
 =head3 prefetch
 

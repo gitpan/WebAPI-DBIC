@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericSetDBIC;
-$WebAPI::DBIC::Resource::GenericSetDBIC::VERSION = '0.001003';
+$WebAPI::DBIC::Resource::GenericSetDBIC::VERSION = '0.001004';
 use Moo;
 use namespace::clean;
 
@@ -29,7 +29,7 @@ WebAPI::DBIC::Resource::GenericSetDBIC
 
 =head1 VERSION
 
-version 0.001003
+version 0.001004
 
 =head1 AUTHOR
 

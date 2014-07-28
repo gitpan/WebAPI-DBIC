@@ -27,6 +27,9 @@
       "runtime" : {
          "requires" : {
             "Carp" : "0",
+            "DBIx::Class" : "0",
+            "Data::Dumper::Concise" : "0",
+            "HTTP::Headers::ActionPack" : "0",
             "HTTP::Throwable" : "0",
             "JSON::MaybeXS" : "0",
             "List::Util" : "0",
@@ -55,6 +58,7 @@
             "Test::HTTP::Response" : "0",
             "Test::More" : "0.98",
             "Test::Most" : "0",
+            "Test::Pod" : "0",
             "Test::Roo" : "0"
          }
       }
@@ -71,6 +75,6 @@
          "web" : "https://github.com/timbunce/WebAPI-DBIC"
       }
    },
-   "version" : "0.001003"
+   "version" : "0.001004"
 }
 
