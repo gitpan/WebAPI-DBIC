@@ -1,5 +1,5 @@
 package WebAPI::HTTP::Throwable::Factory;
-$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001004';
+$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001005'; # TRIAL
 use strict;
 use warnings;
 
@@ -50,7 +50,7 @@ WebAPI::HTTP::Throwable::Factory
 
 =head1 VERSION
 
-version 0.001004
+version 0.001005
 
 =head1 AUTHOR
 

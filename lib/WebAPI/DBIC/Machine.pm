@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Machine;
-$WebAPI::DBIC::Machine::VERSION = '0.001004';
+$WebAPI::DBIC::Machine::VERSION = '0.001005'; # TRIAL
 use Sub::Quote 'quote_sub';
 
 use Moo;
@@ -35,7 +35,7 @@ WebAPI::DBIC::Machine
 
 =head1 VERSION
 
-version 0.001004
+version 0.001005
 
 =head1 AUTHOR
 

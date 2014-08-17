@@ -92,6 +92,13 @@ sub _build_fixtures {
                 [ 17, 1, 2, "Apiary"],
                 [ 18, 1, 3, "Beehind You"],
             ]);
+
+            $self->schema->populate('Gig' => [
+                [qw/artistid gig_datetime/],
+                [1, '2014-01-01T01:01:01Z' ],
+                [2, '2014-06-30T19:00:00Z' ],
+                [3, '2014-06-30T13:00:00Z' ],
+            ]);
         },
     };
 }

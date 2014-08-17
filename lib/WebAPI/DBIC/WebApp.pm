@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 package WebAPI::DBIC::WebApp;
-$WebAPI::DBIC::WebApp::VERSION = '0.001004';
+$WebAPI::DBIC::WebApp::VERSION = '0.001005'; # TRIAL
 use strict;
 use warnings;
 
@@ -117,11 +117,6 @@ sub mk_generic_dbic_item_set_routes {
             $path, $resultset, $rs->result_class;
     }
 
-    # regex to validate the id
-    # XXX could check the data types of the PK fields, or simply remove this
-    # validation and let the resource handle whatever value comes
-    my $qr_id = qr/^-?\d+$/, # int, but allow for -1 etc
-
     my $qr_names = sub {
         my $names_r = join "|", map { quotemeta $_ } @_ or confess "panic";
         return qr/^(?:$names_r)$/x;
@@ -136,11 +131,19 @@ sub mk_generic_dbic_item_set_routes {
     };
     my $mk_getargs = sub {
         my @params = @_;
+        # XXX we should try to generate more efficient code here
         return sub {
             my $req = shift;
             my $args = shift;
             $args->{set} = $rs; # closes over $rs above
-            $args->{$_} = shift for @params; # in path param name order
+            for (@params) { #in path param name order
+                if (m/^[0-9]+$/) { # an id field
+                    $args->{id}[$_-1] = shift @_;
+                }
+                else {
+                    $args->{$_} = shift @_;
+                }
+            }
         }
     };
     my @routes;
@@ -158,21 +161,27 @@ sub mk_generic_dbic_item_set_routes {
         getargs => $mk_getargs->('method'),
     } if @$invokeable_on_set;
 
-    push @routes, "$path/:id" => { # item
-        validations => { id => $qr_id },
-        resource => 'WebAPI::DBIC::Resource::GenericItemDBIC',
+
+    my $item_resource_class = 'WebAPI::DBIC::Resource::GenericItemDBIC';
+    use_module $item_resource_class;
+    my @key_fields = $rs->result_source->unique_constraint_columns( $item_resource_class->id_unique_constraint_name );
+    my @idn_fields = 1 .. @key_fields;
+    my $item_path_spec = join "/", map { ":$_" } @idn_fields;
+
+    push @routes, "$path/$item_path_spec" => { # item
+        #validations => { },
+        resource => $item_resource_class,
         route_defaults => $route_defaults,
-        getargs => $mk_getargs->('id'),
+        getargs => $mk_getargs->(@idn_fields),
     };
 
-    push @routes, "$path/:id/invoke/:method" => { # method call on item
+    push @routes, "$path/$item_path_spec/invoke/:method" => { # method call on item
         validations => {
-            id => $qr_id,
             method => $qr_names->(@$invokeable_on_item),
         },
         resource => 'WebAPI::DBIC::Resource::GenericItemInvoke',
         route_defaults => $route_defaults,
-        getargs => $mk_getargs->('id', 'method'),
+        getargs => $mk_getargs->(@idn_fields, 'method'),
     } if @$invokeable_on_item;
 
     return @routes;
@@ -262,7 +271,7 @@ WebAPI::DBIC::WebApp
 
 =head1 VERSION
 
-version 0.001004
+version 0.001005
 
 =head1 AUTHOR
 

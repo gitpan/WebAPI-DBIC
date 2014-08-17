@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.001004
+    version 0.001005
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful
@@ -18,8 +18,8 @@ DESCRIPTION
 
     * Supports safe robust multi-related-record CRUD transactions
 
-    * Built on the strong foundations of Web::Machine, Path::Router and
-    Plack
+    * Built on the strong foundations of Web::Machine and Plack, with
+    Path::Router as the router. (We aim to support other routers soon.)
 
     * Built as fine-grained roles for maximum reusability and extensibility
 
@@ -203,7 +203,10 @@ MODULES
         extends 'WebAPI::DBIC::Resource::Base'; # is just Web::Machine::Resource
         with    'WebAPI::DBIC::Role::JsonEncoder',
                 'WebAPI::DBIC::Role::JsonParams',
+                'WebAPI::DBIC::Resource::Role::Router',
+                'WebAPI::DBIC::Resource::Role::Identity',
                 'WebAPI::DBIC::Resource::Role::DBIC',
+                'WebAPI::DBIC::Resource::Role::DBICException',
                 'WebAPI::DBIC::Resource::Role::DBICAuth',
                 'WebAPI::DBIC::Resource::Role::DBICParams',
                 'WebAPI::DBIC::Resource::Role::Item',
@@ -220,6 +223,20 @@ MODULES
 
     WebAPI::DBIC::WebApp - this is the main app class and is most likely to
     change in the near future so isn't documented yet.
+
+LIMITATIONS AND OUTSTANDING DESIGN ISSUES
+    Multi-column identities (e.g. primary keys) are not fully supported yet.
+    Simple integer cases will work but the url path format is likely to
+    change.
+
+    Column inflation, e.g. DateTime, is not worked out yet.
+
+    The only supported router is Path::Router at the moment.
+
+    See also https://metacpan.org/pod/distribution/WebAPI-DBIC/NOTES.pod and
+    https://github.com/timbunce/WebAPI-DBIC/issues
+
+    If there's anything you specifically need, just ask!
 
 HOW TO GET HELP
     *   IRC: irc.perl.org#webapi

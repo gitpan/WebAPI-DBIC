@@ -58,9 +58,12 @@ lib/WebAPI/DBIC/Resource/Role/DBIC.pm
 lib/WebAPI/DBIC/Resource/Role/DBICAuth.pm
 lib/WebAPI/DBIC/Resource/Role/DBICException.pm
 lib/WebAPI/DBIC/Resource/Role/DBICParams.pm
+lib/WebAPI/DBIC/Resource/Role/Identity.pm
 lib/WebAPI/DBIC/Resource/Role/Item.pm
 lib/WebAPI/DBIC/Resource/Role/ItemInvoke.pm
 lib/WebAPI/DBIC/Resource/Role/ItemWritable.pm
+lib/WebAPI/DBIC/Resource/Role/Relationship.pm
+lib/WebAPI/DBIC/Resource/Role/Router.pm
 lib/WebAPI/DBIC/Resource/Role/Set.pm
 lib/WebAPI/DBIC/Resource/Role/SetRender.pm
 lib/WebAPI/DBIC/Resource/Role/SetWritable.pm
@@ -70,6 +73,8 @@ lib/WebAPI/DBIC/Util.pm
 lib/WebAPI/DBIC/WebApp.pm
 lib/WebAPI/HTTP/Throwable/Factory.pm
 lib/WebAPI/HTTP/Throwable/Role/JSONBody.pm
+run-chinook-demo.sh
+run-testschema-demo.sh
 t/00-compile.t
 t/10-basics.t
 t/11-paging.t
@@ -91,6 +96,7 @@ t/lib/TestSchema/Result/Artist.pm
 t/lib/TestSchema/Result/CD.pm
 t/lib/TestSchema/Result/CD_to_Producer.pm
 t/lib/TestSchema/Result/Genre.pm
+t/lib/TestSchema/Result/Gig.pm
 t/lib/TestSchema/Result/Producer.pm
 t/lib/TestSchema/Result/Track.pm
 t/release-pod-syntax.t

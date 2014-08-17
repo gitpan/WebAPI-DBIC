@@ -1,11 +1,14 @@
 package WebAPI::DBIC::Resource::GenericItemInvoke;
-$WebAPI::DBIC::Resource::GenericItemInvoke::VERSION = '0.001004';
+$WebAPI::DBIC::Resource::GenericItemInvoke::VERSION = '0.001005'; # TRIAL
 use Moo;
 use namespace::clean;
 
 extends 'WebAPI::DBIC::Resource::Base';
 with    'WebAPI::DBIC::Role::JsonEncoder',
         'WebAPI::DBIC::Role::JsonParams',
+        'WebAPI::DBIC::Resource::Role::Router',
+        'WebAPI::DBIC::Resource::Role::Identity', # XXX probably ought not be needed, implies need to refactor ::DBIC further
+        'WebAPI::DBIC::Resource::Role::Relationship',
         'WebAPI::DBIC::Resource::Role::DBIC',
         'WebAPI::DBIC::Resource::Role::DBICException',
         'WebAPI::DBIC::Resource::Role::DBICAuth',
@@ -28,7 +31,7 @@ WebAPI::DBIC::Resource::GenericItemInvoke
 
 =head1 VERSION
 
-version 0.001004
+version 0.001005
 
 =head1 AUTHOR
 

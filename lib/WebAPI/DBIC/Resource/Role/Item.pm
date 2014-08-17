@@ -1,16 +1,18 @@
 package WebAPI::DBIC::Resource::Role::Item;
-$WebAPI::DBIC::Resource::Role::Item::VERSION = '0.001004';
+$WebAPI::DBIC::Resource::Role::Item::VERSION = '0.001005'; # TRIAL
 use Moo::Role;
 
 
 requires 'render_item_as_plain_hash';
 requires 'render_item_as_hal_hash';
+requires 'id_unique_constraint_name';
 requires 'encode_json';
 requires 'set';
 
 
-has id => (
+has id => (         # array of 1 or more key values from url path
    is => 'ro',
+   #isa => array ref
    required => 1,
 );
 
@@ -22,7 +24,7 @@ has item => (
 
 sub _build_item {
     my $self = shift;
-    return $self->set->find($self->id);
+    return $self->set->find( @{ $self->id }, { key => $self->id_unique_constraint_name } );
 }
 
 
@@ -53,7 +55,7 @@ WebAPI::DBIC::Resource::Role::Item
 
 =head1 VERSION
 
-version 0.001004
+version 0.001005
 
 =head1 AUTHOR
 
