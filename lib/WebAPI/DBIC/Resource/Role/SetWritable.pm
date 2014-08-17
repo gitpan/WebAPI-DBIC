@@ -1,6 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritable;
-$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.001005'; # TRIAL
-# Based on https://github.com/frioux/drinkup
+$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.001006';
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -164,7 +163,18 @@ WebAPI::DBIC::Resource::Role::SetWritable
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 DESCRIPTION
+
+Handles POST requests for resources representing set resources, e.g. to insert
+rows into a database table.
+
+Supports the C<application/hal+json> and C<application/json> content types.
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::Role::SetWritable - methods handling requests to update set resources
 
 =head1 AUTHOR
 

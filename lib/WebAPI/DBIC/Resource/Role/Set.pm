@@ -1,6 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Set;
-$WebAPI::DBIC::Resource::Role::Set::VERSION = '0.001005'; # TRIAL
-# Based on https://github.com/frioux/drinkup
+$WebAPI::DBIC::Resource::Role::Set::VERSION = '0.001006';
 
 use Moo::Role;
 
@@ -34,7 +33,18 @@ WebAPI::DBIC::Resource::Role::Set
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 DESCRIPTION
+
+Handles GET and HEAD requests for requests representing set resources, e.g.
+the rows of a database table.
+
+Supports the C<application/hal+json> and C<application/json> content types.
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::Role::Set - methods related to handling requests for set resources
 
 =head1 AUTHOR
 

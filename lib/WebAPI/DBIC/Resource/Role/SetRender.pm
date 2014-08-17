@@ -1,5 +1,7 @@
 package WebAPI::DBIC::Resource::Role::SetRender;
-$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001005'; # TRIAL
+$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001006';
+
+
 use Devel::Dwarn;
 use Carp qw(confess);
 
@@ -107,7 +109,11 @@ WebAPI::DBIC::Resource::Role::SetRender
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::Role::SetRender - methods for rendering resources as JSON
 
 =head1 AUTHOR
 

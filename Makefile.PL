@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "A composable RESTful JSON+HAL API to DBIx::Class schemas using roles, Web::Machine and Path::Router",
+  "ABSTRACT" => "A composable RESTful JSON+HAL API to DBIx::Class schemas using roles and Web::Machine",
   "AUTHOR" => "Tim Bunce <Tim.Bunce\@pobox.com>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -53,7 +53,7 @@ my %WriteMakefileArgs = (
     "Test::Pod" => 0,
     "Test::Roo" => 0
   },
-  "VERSION" => "0.001005",
+  "VERSION" => "0.001006",
   "test" => {
     "TESTS" => "t/*.t"
   }

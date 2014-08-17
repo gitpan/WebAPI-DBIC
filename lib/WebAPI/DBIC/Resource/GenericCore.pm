@@ -1,5 +1,6 @@
-package WebAPI::DBIC::Resource::GenericSetDBIC;
-$WebAPI::DBIC::Resource::GenericSetDBIC::VERSION = '0.001005'; # TRIAL
+package WebAPI::DBIC::Resource::GenericCore;
+$WebAPI::DBIC::Resource::GenericCore::VERSION = '0.001006';
+
 use Moo;
 use namespace::clean;
 
@@ -13,9 +14,6 @@ with    'WebAPI::DBIC::Role::JsonEncoder',
         'WebAPI::DBIC::Resource::Role::DBICException',
         'WebAPI::DBIC::Resource::Role::DBICAuth',
         'WebAPI::DBIC::Resource::Role::DBICParams',
-        'WebAPI::DBIC::Resource::Role::SetRender',
-        'WebAPI::DBIC::Resource::Role::Set',
-        'WebAPI::DBIC::Resource::Role::SetWritable',
         ;
 
 1;
@@ -28,11 +26,15 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::GenericSetDBIC
+WebAPI::DBIC::Resource::GenericCore
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::GenericCore - a set of core roles to implement a generic DBIC resources
 
 =head1 AUTHOR
 

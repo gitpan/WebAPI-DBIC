@@ -1,12 +1,12 @@
-package WebAPI::DBIC::Resource::GenericItemInvoke;
-$WebAPI::DBIC::Resource::GenericItemInvoke::VERSION = '0.001006';
+package WebAPI::DBIC::Resource::GenericItem;
+$WebAPI::DBIC::Resource::GenericItem::VERSION = '0.001006';
 
 use Moo;
 use namespace::clean;
 
 extends 'WebAPI::DBIC::Resource::GenericCore';
 with    'WebAPI::DBIC::Resource::Role::Item',
-        'WebAPI::DBIC::Resource::Role::ItemInvoke',
+        'WebAPI::DBIC::Resource::Role::ItemWritable',
         ;
 
 1;
@@ -19,7 +19,7 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::GenericItemInvoke
+WebAPI::DBIC::Resource::GenericItem
 
 =head1 VERSION
 
@@ -27,7 +27,7 @@ version 0.001006
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::GenericItemInvoke - a set of roles to implement a resource for making method calls on a DBIC item
+WebAPI::DBIC::Resource::GenericItem - a set of roles to implement a generic DBIC item resource
 
 =head1 AUTHOR
 

@@ -49,11 +49,11 @@ hal-browser/vendor/js/jquery-1.10.2.min.map
 hal-browser/vendor/js/underscore.js
 hal-browser/vendor/js/uritemplates.js
 lib/WebAPI/DBIC.pm
-lib/WebAPI/DBIC/Machine.pm
 lib/WebAPI/DBIC/Resource/Base.pm
-lib/WebAPI/DBIC/Resource/GenericItemDBIC.pm
+lib/WebAPI/DBIC/Resource/GenericCore.pm
+lib/WebAPI/DBIC/Resource/GenericItem.pm
 lib/WebAPI/DBIC/Resource/GenericItemInvoke.pm
-lib/WebAPI/DBIC/Resource/GenericSetDBIC.pm
+lib/WebAPI/DBIC/Resource/GenericSet.pm
 lib/WebAPI/DBIC/Resource/Role/DBIC.pm
 lib/WebAPI/DBIC/Resource/Role/DBICAuth.pm
 lib/WebAPI/DBIC/Resource/Role/DBICException.pm
@@ -69,6 +69,7 @@ lib/WebAPI/DBIC/Resource/Role/SetRender.pm
 lib/WebAPI/DBIC/Resource/Role/SetWritable.pm
 lib/WebAPI/DBIC/Role/JsonEncoder.pm
 lib/WebAPI/DBIC/Role/JsonParams.pm
+lib/WebAPI/DBIC/Router.pm
 lib/WebAPI/DBIC/Util.pm
 lib/WebAPI/DBIC/WebApp.pm
 lib/WebAPI/HTTP/Throwable/Factory.pm

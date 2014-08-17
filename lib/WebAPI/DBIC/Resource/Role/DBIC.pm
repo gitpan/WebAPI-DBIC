@@ -1,5 +1,6 @@
 package WebAPI::DBIC::Resource::Role::DBIC;
-$WebAPI::DBIC::Resource::Role::DBIC::VERSION = '0.001005'; # TRIAL
+$WebAPI::DBIC::Resource::Role::DBIC::VERSION = '0.001006';
+
 use Carp qw(croak confess);
 use Devel::Dwarn;
 use JSON::MaybeXS qw(JSON);
@@ -7,14 +8,12 @@ use JSON::MaybeXS qw(JSON);
 use Moo::Role;
 
 
-requires 'id_from_key_values';
-requires 'id_for_item';
 requires 'uri_for';
 requires 'throwable';
 requires 'request';
 requires 'response';
 requires 'get_url_for_item_relationship';
-requires 'id_unique_constraint_name';
+requires 'id_kvs_for_item';
 
 
 has set => (
@@ -44,23 +43,6 @@ sub render_item_as_plain_hash {
 }
 
 
-sub id_column_names_for_item {
-    my ($self, $item) = @_;
-    return $item->result_source->unique_constraint_columns( $self->id_unique_constraint_name );
-}
-
-sub id_column_values_for_item {
-    my ($self, $item) = @_;
-    return map { $item->get_column($_) } $self->id_column_names_for_item($item);
-}
-
-sub id_kvs_for_item {
-    my ($self, $item) = @_;
-    my @key_fields = $self->id_column_names_for_item($item);
-    my $idn = 0;
-    return map { ++$idn => $item->get_column($_) } @key_fields;
-}
-
 sub path_for_item {
     my ($self, $item) = @_;
 
@@ -83,8 +65,8 @@ sub render_item_into_body {
     # XXX ought to be a cloned request, with tweaked url/params?
     my $item_request = $self->request;
 
-    # XXX shouldn't hard-code GenericItemDBIC here (should use router?)
-    my $item_resource = WebAPI::DBIC::Resource::GenericItemDBIC->new(
+    # XXX shouldn't hard-code GenericItem here (should use router?)
+    my $item_resource = WebAPI::DBIC::Resource::GenericItem->new(
         request => $item_request, response => $item_request->new_response,
         set => $self->set,
         item => $item,
@@ -187,7 +169,11 @@ WebAPI::DBIC::Resource::Role::DBIC
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::Role::DBIC - a role with core methods for DBIx::Class resources
 
 =head1 AUTHOR
 

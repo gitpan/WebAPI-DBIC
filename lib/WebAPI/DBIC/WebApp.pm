@@ -1,19 +1,17 @@
 #!/usr/bin/env perl
 
 package WebAPI::DBIC::WebApp;
-$WebAPI::DBIC::WebApp::VERSION = '0.001005'; # TRIAL
+$WebAPI::DBIC::WebApp::VERSION = '0.001006';
 use strict;
 use warnings;
 
-use Plack::App::Path::Router;
-use Path::Router;
 use Module::Runtime qw(use_module);
 use Carp qw(croak confess);
 use JSON::MaybeXS qw(JSON);
 
 use Devel::Dwarn;
 
-use WebAPI::DBIC::Machine;
+use Web::Machine;
 use WebAPI::HTTP::Throwable::Factory;
 
 # pre-load some modules to improve shared memory footprint
@@ -28,6 +26,12 @@ has writable => (is => 'ro', default => 1);
 has http_auth_type => (is => 'ro', default => 'Basic');
 has extra_routes => (is => 'ro', lazy => 1, builder => 1);
 has auto_routes => (is => 'ro', lazy => 1, builder => 1);
+has router_class => (is => 'ro', builder => 1);
+
+sub _build_router_class {
+    require WebAPI::DBIC::Router;
+    return 'WebAPI::DBIC::Router';
+}
 
 sub _build_extra_routes { [] }
 sub _build_auto_routes {
@@ -149,20 +153,20 @@ sub mk_generic_dbic_item_set_routes {
     my @routes;
 
     push @routes, "$path" => { # set (aka collection)
-        resource => 'WebAPI::DBIC::Resource::GenericSetDBIC',
+        resource_class => 'WebAPI::DBIC::Resource::GenericSet',
         route_defaults => $route_defaults,
         getargs => $mk_getargs->(),
     };
 
     push @routes, "$path/invoke/:method" => { # method call on set
         validations => { method => $qr_names->(@$invokeable_on_set) },
-        resource => 'WebAPI::DBIC::Resource::GenericSetInvoke',
+        resource_class => 'WebAPI::DBIC::Resource::GenericSetInvoke',
         route_defaults => $route_defaults,
         getargs => $mk_getargs->('method'),
     } if @$invokeable_on_set;
 
 
-    my $item_resource_class = 'WebAPI::DBIC::Resource::GenericItemDBIC';
+    my $item_resource_class = 'WebAPI::DBIC::Resource::GenericItem';
     use_module $item_resource_class;
     my @key_fields = $rs->result_source->unique_constraint_columns( $item_resource_class->id_unique_constraint_name );
     my @idn_fields = 1 .. @key_fields;
@@ -170,7 +174,7 @@ sub mk_generic_dbic_item_set_routes {
 
     push @routes, "$path/$item_path_spec" => { # item
         #validations => { },
-        resource => $item_resource_class,
+        resource_class => $item_resource_class,
         route_defaults => $route_defaults,
         getargs => $mk_getargs->(@idn_fields),
     };
@@ -179,7 +183,7 @@ sub mk_generic_dbic_item_set_routes {
         validations => {
             method => $qr_names->(@$invokeable_on_item),
         },
-        resource => 'WebAPI::DBIC::Resource::GenericItemInvoke',
+        resource_class => 'WebAPI::DBIC::Resource::GenericItemInvoke',
         route_defaults => $route_defaults,
         getargs => $mk_getargs->(@idn_fields, 'method'),
     } if @$invokeable_on_item;
@@ -197,64 +201,78 @@ sub all_routes {
 sub to_psgi_app {
     my ($self) = @_;
 
+    my $router = $self->router_class->new;
+
     my @routes = $self->all_routes;
 
-    if ($ENV{WEBAPI_DBIC_DEBUG}) {
-        my %routes = @routes;
-        warn sprintf "Routes for $self:\n";
-        for my $path (sort keys %routes) {
-            my $spec = $routes{$path};
-            warn sprintf "/%s => %s as %s\n", $path,
-                $spec->{route_defaults}{result_class},
-                $spec->{resource};
-        }
-    }
-
-    my $router = Path::Router->new;
-    while (my $r = shift @routes) {
+    while (my $path = shift @routes) {
         my $spec = shift @routes or confess "panic";
 
-        my $getargs = $spec->{getargs};
-        my $resource_class = $spec->{resource} or confess "panic";
-        use_module $resource_class;
-
-        $router->add_route($r,
-            validations => $spec->{validations} || {},
-            defaults => $spec->{route_defaults},
-            target => sub {
-                my $request = shift; # url args remain in @_
-
-                #local $SIG{__DIE__} = \&Carp::confess;
-
-                my %resource_args = (
-                    writable => $self->writable,
-                    throwable => 'WebAPI::HTTP::Throwable::Factory',
-                    http_auth_type => $self->http_auth_type,
-                );
-                # perform any required setup for this request & params in @_
-                $getargs->($request, \%resource_args, @_) if $getargs;
-
-                warn "Running machine for $resource_class (with @{[ keys %resource_args ]})\n"
-                    if $ENV{WEBAPI_DBIC_DEBUG};
-                my $app = WebAPI::DBIC::Machine->new(
-                    resource => $resource_class,
-                    debris   => \%resource_args,
-                    tracing => $ENV{WEBAPI_DBIC_DEBUG},
-                )->to_app;
-                my $resp = eval { $app->($request->env) };
-                #Dwarn $resp;
-                if ($@) { # XXX report and rethrow
-                    Dwarn [ "EXCEPTION from app: $@" ];
-                    die; ## no critic (ErrorHandling::RequireCarping)
-                }
-                return $resp;
-            },
-        );
+        $self->add_webapi_dbic_route($router, $path, $spec);
     }
 
-    $router->add_route('', target => \&hal_browser_app);
+    $router->add_route(path => '', target => \&hal_browser_app);
 
-    Plack::App::Path::Router->new( router => $router )->to_app; # return Plack app
+    return $router->to_psgi_app; # return Plack app
+}
+
+
+sub add_webapi_dbic_route {
+    my ($self, $router, $path, $spec) = @_;
+
+    if ($ENV{WEBAPI_DBIC_DEBUG}) {
+        warn sprintf "/%s => result_class=%s, via %s\n", $path,
+            $spec->{route_defaults}{result_class},
+            $spec->{resource_class};
+    }
+
+    my $getargs = $spec->{getargs};
+    my $resource_class = $spec->{resource_class} or confess "panic";
+    use_module $resource_class;
+    
+    # this sub acts as the interface between the router and
+    # the Web::Machine instance handling the resource for that url path
+    my $target = sub {
+        my $request = shift; # url args remain in @_
+
+        #local $SIG{__DIE__} = \&Carp::confess;
+
+        my %resource_args;
+        # perform any required setup for this request & params in @_
+        $getargs->($request, \%resource_args, @_) if $getargs;
+
+        warn "$path: running machine for $resource_class (with @{[ keys %resource_args ]})\n"
+            if $ENV{WEBAPI_DBIC_DEBUG};
+
+        my $app = Web::Machine->new(
+            resource => $resource_class,
+            resource_args => [
+                writable => $self->writable,
+                http_auth_type => $self->http_auth_type,
+                throwable => 'WebAPI::HTTP::Throwable::Factory',
+                %resource_args,
+            ],
+            tracing => $ENV{WEBAPI_DBIC_DEBUG},
+        )->to_app;
+
+        my $resp = eval { $app->($request->env) };
+        #Dwarn $resp;
+        if ($@) { # XXX report and rethrow
+            warn "EXCEPTION during request for $path: $@";
+            die; ## no critic (ErrorHandling::RequireCarping)
+        }
+
+        return $resp;
+    };
+
+    $router->add_route(
+        path        => $path,
+        validations => $spec->{validations} || {},
+        defaults    => $spec->{route_defaults},
+        target      => $target,
+    );
+
+    return;
 }
 
 1;
@@ -271,7 +289,7 @@ WebAPI::DBIC::WebApp
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
 
 =head1 AUTHOR
 

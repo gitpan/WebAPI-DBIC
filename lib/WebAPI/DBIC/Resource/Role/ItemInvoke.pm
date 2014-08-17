@@ -1,5 +1,6 @@
 package WebAPI::DBIC::Resource::Role::ItemInvoke;
-$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.001005'; # TRIAL
+$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.001006';
+
 use Scalar::Util qw(blessed);
 
 use Moo::Role;
@@ -89,7 +90,11 @@ WebAPI::DBIC::Resource::Role::ItemInvoke
 
 =head1 VERSION
 
-version 0.001005
+version 0.001006
+
+=head1 NAME
+
+WebAPI::DBIC::Resource::Role::ItemInvoke - methods for resources representing method calls on item resources
 
 =head1 AUTHOR
 
