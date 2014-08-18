@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Relationship;
-$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001006';
+$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001007';
 
 use Devel::Dwarn;
 use Hash::Util qw(lock_keys);
@@ -231,7 +231,7 @@ WebAPI::DBIC::Resource::Role::Relationship
 
 =head1 VERSION
 
-version 0.001006
+version 0.001007
 
 =head1 NAME
 

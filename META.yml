@@ -6,6 +6,7 @@ build_requires:
   DBIx::Class: '0'
   Module::Pluggable: '0'
   Sort::Key: '0'
+  Test::Compile: '0'
   Test::DBIx::Class: '0'
   Test::HTTP::Response: '0'
   Test::More: '0.98'
@@ -47,4 +48,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.001006'
+version: '0.001007'

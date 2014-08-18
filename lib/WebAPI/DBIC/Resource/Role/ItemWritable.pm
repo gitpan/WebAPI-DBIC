@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemWritable;
-$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001006';
+$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001007';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -94,6 +94,7 @@ sub _update_embedded_resources {
 
     # XXX discard_changes causes a refetch of the record for prefetch
     # perhaps worth trying to avoid the discard if not required
+    # Note that update() calls set_inflated_columns()
     return $item->update($hal)->discard_changes();
 }
 
@@ -137,7 +138,7 @@ sub update_resource {
             my $meta     = delete $hal->{_meta};
             my $embedded = delete $hal->{_embedded} && die "_embedded not supported here (yet?)\n";
 
-            $item = $self->set->create($hal);
+            $item = $self->set->create($hal); # handles deflation
 
             $self->response->header('Location' => $self->path_for_item($item))
                 unless $old_item; # set Location and thus 201 if Created not modified
@@ -171,7 +172,7 @@ WebAPI::DBIC::Resource::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.001006
+version 0.001007
 
 =head1 NAME
 

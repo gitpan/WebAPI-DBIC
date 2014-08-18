@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericSet;
-$WebAPI::DBIC::Resource::GenericSet::VERSION = '0.001006';
+$WebAPI::DBIC::Resource::GenericSet::VERSION = '0.001007';
 
 use Moo;
 use namespace::clean;
@@ -24,7 +24,7 @@ WebAPI::DBIC::Resource::GenericSet
 
 =head1 VERSION
 
-version 0.001006
+version 0.001007
 
 =head1 NAME
 

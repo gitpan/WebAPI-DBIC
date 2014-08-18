@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.001006
+    version 0.001007
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful
@@ -22,6 +22,8 @@ DESCRIPTION
     Path::Router as the router. (We aim to support other routers soon.)
 
     * Built as fine-grained roles for maximum reusability and extensibility
+
+    * Integrates with other Plack based applications.
 
     * The resource roles can be added to your existing application
 
@@ -236,20 +238,53 @@ MODULES
     WebAPI::DBIC::Util.pm provides a few general utilities.
 
     WebAPI::DBIC::WebApp - this is the main app class and is most likely to
-    change in the near future so isn't documented yet.
+    change in the near future so isn't documented much yet.
 
-LIMITATIONS AND OUTSTANDING DESIGN ISSUES
-    The only supported router is Path::Router at the moment.
+TRANSPARENCY
+    WebAPI::DBIC aims to be a fairly 'transparent' layer between your
+    DBIx::Class schema and the JSON that's generated and received.
 
-    See also https://metacpan.org/pod/distribution/WebAPI-DBIC/NOTES.pod and
-    https://github.com/timbunce/WebAPI-DBIC/issues
+    So it's the responibility of your schema to return data in the format
+    you want in your generated URLs and JSON, and to accept data in the
+    format that arrives in requests from clients.
 
-    If there's anything you specifically need, just ask!
+    For an example of how to handle dates using DateTime nicely, see:
+
+      https://blog.afoolishmanifesto.com/posts/solution-on-how-to-serialize-dates-nicely/
+
+INTEGRATING
+  Catalyst
+    As with any PSGI application, WebAPI::DBIC can integrate into Catalyst
+    fairly simply with Catalyst::Action::FromPSGI. Here's an example
+    integration:
+
+     package MyApp::Controller::HelloName;
+
+     use base 'Catalyst::Controller';
+
+     sub api : Path('/api') ActionClass('FromPSGI') {
+       my ($self, $c) = @_;
+
+       WebAPI::DBIC::WebApp->new({
+         schema   => $c->model('DB')->schema,
+         writable => 0,
+         http_auth_type => 'none', # will use Catalysts auth for the given path
+                                   # consider leveraging chaining or another
+                                   # ActionRole for auth
+       })->to_psgi_app
+     }
+
+     1;
 
 HOW TO GET HELP
     *   IRC: irc.perl.org#webapi
 
     *   Source: <https://github.com/timbunce/WebAPI-DBIC>
+
+    See also https://metacpan.org/pod/distribution/WebAPI-DBIC/NOTES.pod and
+    https://github.com/timbunce/WebAPI-DBIC/issues
+
+    If there's anything you specifically need, just ask!
 
 CREDITS
     Stevan Little gets top billing for creating Web::Machine and
@@ -414,7 +449,7 @@ OVERVIEW OF REPRESENTIONS AND ACTIONS
         {
             _links: { ... },  # optional
             _meta: { ... },   # optional
-            _embedded: { 
+            _embedded: {
                 ecosystems => [
                     { ... }, ...
                 ]

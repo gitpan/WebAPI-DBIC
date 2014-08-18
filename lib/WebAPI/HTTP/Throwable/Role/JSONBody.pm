@@ -1,5 +1,5 @@
 package WebAPI::HTTP::Throwable::Role::JSONBody;
-$WebAPI::HTTP::Throwable::Role::JSONBody::VERSION = '0.001006';
+$WebAPI::HTTP::Throwable::Role::JSONBody::VERSION = '0.001007';
 use Moo::Role;
 
 sub body { return shift->message }
@@ -29,7 +29,7 @@ WebAPI::HTTP::Throwable::Role::JSONBody
 
 =head1 VERSION
 
-version 0.001006
+version 0.001007
 
 =head1 OVERVIEW
 

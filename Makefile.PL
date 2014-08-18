@@ -46,6 +46,7 @@ my %WriteMakefileArgs = (
     "DBIx::Class" => 0,
     "Module::Pluggable" => 0,
     "Sort::Key" => 0,
+    "Test::Compile" => 0,
     "Test::DBIx::Class" => 0,
     "Test::HTTP::Response" => 0,
     "Test::More" => "0.98",
@@ -53,7 +54,7 @@ my %WriteMakefileArgs = (
     "Test::Pod" => 0,
     "Test::Roo" => 0
   },
-  "VERSION" => "0.001006",
+  "VERSION" => "0.001007",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -79,6 +80,7 @@ my %FallbackPrereqs = (
   "Sort::Key" => 0,
   "Sub::Exporter" => 0,
   "Sub::Quote" => 0,
+  "Test::Compile" => 0,
   "Test::DBIx::Class" => 0,
   "Test::HTTP::Response" => 0,
   "Test::More" => "0.98",
