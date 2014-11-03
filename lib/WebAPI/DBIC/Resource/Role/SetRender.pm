@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetRender;
-$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001007';
+$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001008'; # TRIAL
 
 
 use Devel::Dwarn;
@@ -109,7 +109,7 @@ WebAPI::DBIC::Resource::Role::SetRender
 
 =head1 VERSION
 
-version 0.001007
+version 0.001008
 
 =head1 NAME
 

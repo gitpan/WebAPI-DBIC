@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemWritable;
-$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001007';
+$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001008'; # TRIAL
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -15,6 +15,15 @@ requires 'prefetch';
 requires 'request';
 requires 'response';
 requires 'path_for_item';
+
+
+# By default the DBIx::Class::Row update() call will only update the
+# columns where %$hal contains different values to the ones in $item.
+# This is usually a useful optimization but not always. So we provide
+# a way to disable it on individual resources.
+has skip_dirty_check => (
+    is => 'rw',
+);
 
 
 sub content_types_accepted { return [
@@ -92,10 +101,22 @@ sub _update_embedded_resources {
         # XXX perhaps save $subitem to optimise prefetch handling?
     }
 
+    # By default the DBIx::Class::Row update() call below will only update the
+    # columns where %$hal contains different values to the ones in $item
+    # This is usually a useful optimization but not always. So we provide
+    # a way to disable it on individual resources.
+    if ($self->skip_dirty_check) {
+        $item->make_column_dirty($_) for keys %$hal;
+    }
+
+    # Note that update() calls set_inflated_columns()
+    $item->update($hal);
+
     # XXX discard_changes causes a refetch of the record for prefetch
     # perhaps worth trying to avoid the discard if not required
-    # Note that update() calls set_inflated_columns()
-    return $item->update($hal)->discard_changes();
+    $item->discard_changes();
+
+    return $item;
 }
 
 
@@ -172,7 +193,7 @@ WebAPI::DBIC::Resource::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.001007
+version 0.001008
 
 =head1 NAME
 

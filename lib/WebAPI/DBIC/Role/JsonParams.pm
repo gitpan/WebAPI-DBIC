@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Role::JsonParams;
-$WebAPI::DBIC::Role::JsonParams::VERSION = '0.001007';
+$WebAPI::DBIC::Role::JsonParams::VERSION = '0.001008'; # TRIAL
 
 use Moo::Role;
 
@@ -77,7 +77,7 @@ WebAPI::DBIC::Role::JsonParams
 
 =head1 VERSION
 
-version 0.001007
+version 0.001008
 
 =head1 DESCRIPTION
 

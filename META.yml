@@ -6,7 +6,7 @@ build_requires:
   DBIx::Class: '0'
   Module::Pluggable: '0'
   Sort::Key: '0'
-  Test::Compile: '0'
+  Test::Compile: v1.1.0
   Test::DBIx::Class: '0'
   Test::HTTP::Response: '0'
   Test::More: '0.98'
@@ -31,7 +31,7 @@ requires:
   JSON::MaybeXS: '0'
   List::Util: '0'
   Module::Runtime: '0'
-  Moo: '0'
+  Moo: '1.001000'
   Path::Router: '0'
   Plack: '0'
   Plack::App::File: '0'
@@ -48,4 +48,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.001007'
+version: '0.001008'

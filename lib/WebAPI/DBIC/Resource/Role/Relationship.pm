@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Relationship;
-$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001007';
+$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001008'; # TRIAL
 
 use Devel::Dwarn;
 use Hash::Util qw(lock_keys);
@@ -57,6 +57,8 @@ sub _get_relationship_link_info {
 
             # XXX herein we attempt the insane task of mapping SQL::Abstract conditions
             # into something usable by WebAPI::DBIC - this is a total hack
+            # There is a better way: https://github.com/timbunce/WebAPI-DBIC/issues/8
+            # but it requires DBIC 0.082801+ (2014-10-05)
 
             for my $crosstable_cond_key (keys %$crosstable_cond) {
                 my $cond = $crosstable_cond->{$crosstable_cond_key};
@@ -231,7 +233,7 @@ WebAPI::DBIC::Resource::Role::Relationship
 
 =head1 VERSION
 
-version 0.001007
+version 0.001008
 
 =head1 NAME
 
