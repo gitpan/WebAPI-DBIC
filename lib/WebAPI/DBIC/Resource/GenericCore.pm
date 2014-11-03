@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericCore;
-$WebAPI::DBIC::Resource::GenericCore::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::GenericCore::VERSION = '0.001008';
 
 use Moo;
 use namespace::clean;

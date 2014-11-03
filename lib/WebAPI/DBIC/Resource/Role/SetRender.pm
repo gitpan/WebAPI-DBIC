@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetRender;
-$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::Role::SetRender::VERSION = '0.001008';
 
 
 use Devel::Dwarn;

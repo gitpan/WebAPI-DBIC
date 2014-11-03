@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBIC;
-$WebAPI::DBIC::Resource::Role::DBIC::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::Role::DBIC::VERSION = '0.001008';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;

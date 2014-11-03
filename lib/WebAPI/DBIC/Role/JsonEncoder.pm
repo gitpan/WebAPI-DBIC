@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Role::JsonEncoder;
-$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.001008';
 
 use JSON::MaybeXS qw(JSON);
 

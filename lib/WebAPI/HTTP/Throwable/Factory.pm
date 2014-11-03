@@ -1,5 +1,5 @@
 package WebAPI::HTTP::Throwable::Factory;
-$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001008'; # TRIAL
+$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001008';
 
 # I'm not sure what value there is here, but maybe I'm just forgetting the goodness.
 # Exception handling probably needs to be rethought.

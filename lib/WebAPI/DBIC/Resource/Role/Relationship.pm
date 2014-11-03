@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Relationship;
-$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::Role::Relationship::VERSION = '0.001008';
 
 use Devel::Dwarn;
 use Hash::Util qw(lock_keys);

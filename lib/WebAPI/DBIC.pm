@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::VERSION = '0.001008';
 use strict; # keep our kwalitee up!
 use warnings;
 1;

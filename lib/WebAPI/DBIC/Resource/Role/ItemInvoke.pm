@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemInvoke;
-$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.001008';
 
 use Scalar::Util qw(blessed);
 

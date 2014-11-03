@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 package WebAPI::DBIC::WebApp;
-$WebAPI::DBIC::WebApp::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::WebApp::VERSION = '0.001008';
 use strict;
 use warnings;
 

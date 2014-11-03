@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBICException;
-$WebAPI::DBIC::Resource::Role::DBICException::VERSION = '0.001008'; # TRIAL
+$WebAPI::DBIC::Resource::Role::DBICException::VERSION = '0.001008';
 
 use Carp qw(croak confess);
 use Scalar::Util qw(blessed);
