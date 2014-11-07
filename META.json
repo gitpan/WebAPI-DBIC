@@ -4,7 +4,7 @@
       "Tim Bunce <Tim.Bunce@pobox.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.142690",
+   "generated_by" : "Dist::Zilla version 5.022, CPAN::Meta::Converter version 2.142690",
    "license" : [
       "perl_5"
    ],
@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "develop" : {
@@ -35,23 +35,22 @@
             "List::Util" : "0",
             "Module::Runtime" : "0",
             "Moo" : "1.001000",
-            "Path::Router" : "0",
-            "Plack" : "0",
+            "Path::Router" : "0.13",
+            "Plack" : "1.0033",
             "Plack::App::File" : "0",
-            "Plack::App::Path::Router" : "0",
+            "Plack::App::Path::Router" : "0.06",
             "Scalar::Util" : "0",
             "Sub::Exporter" : "0",
             "Sub::Quote" : "0",
             "Try::Tiny" : "0",
             "URI" : "0",
-            "Web::Machine" : "0",
+            "Web::Machine" : "0.15",
             "namespace::clean" : "0",
             "parent" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "DBIx::Class" : "0",
             "Module::Pluggable" : "0",
             "Sort::Key" : "0",
             "Test::Compile" : "v1.1.0",
@@ -74,8 +73,9 @@
          "type" : "git",
          "url" : "https://github.com/timbunce/WebAPI-DBIC.git",
          "web" : "https://github.com/timbunce/WebAPI-DBIC"
-      }
+      },
+      "x_IRC" : "irc://irc.perl.org/#webapi"
    },
-   "version" : "0.001008"
+   "version" : "0.001009"
 }
 

@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemWritable;
-$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001008';
+$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001009';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -25,14 +25,20 @@ has skip_dirty_check => (
     is => 'rw',
 );
 
+has _pre_update_resource_method => (
+    is => 'rw',
+);
 
-sub content_types_accepted { return [
-    {'application/hal+json' => 'from_plain_json'},
-    {'application/json'     => 'from_plain_json'}
-] }
+has content_types_accepted => (
+    is => 'lazy',
+);
+
+sub _build_content_types_accepted {
+    return [ {'application/json' => 'from_plain_json'} ]
+}
 
 
-sub from_plain_json { # XXX currently used for hal too
+sub from_plain_json {
     my $self = shift;
     my $data = $self->decode_json( $self->request->content );
     $self->update_resource($data, is_put_replace => 0);
@@ -46,7 +52,7 @@ around 'allowed_methods' => sub {
  
     my $methods = $self->$orig();
 
-    push @$methods, qw(PUT DELETE) if $self->writable;
+    $methods = [ qw(PUT DELETE), @$methods ] if $self->writable;
 
     return $methods;
 };
@@ -55,51 +61,13 @@ around 'allowed_methods' => sub {
 sub delete_resource { return $_[0]->item->delete }
 
 
-sub _update_embedded_resources {
+sub _do_update_resource {
     my ($self, $item, $hal, $result_class) = @_;
 
-    my $links    = delete $hal->{_links};
-    my $meta     = delete $hal->{_meta};
-    my $embedded = delete $hal->{_embedded} || {};
-
-    for my $rel (keys %$embedded) {
-
-        my $rel_info = $result_class->relationship_info($rel)
-            or die "$result_class doesn't have a '$rel' relation\n";
-        die "$result_class _embedded $rel isn't a 'single' relationship\n"
-            if $rel_info->{attrs}{accessor} ne 'single';
-
-        my $rel_hal = $embedded->{$rel};
-        die "_embedded $rel data is not a hash\n"
-            if ref $rel_hal ne 'HASH';
-
-        # work out what keys to copy from the subitem we're about to update
-        # XXX this isn't required unless updating key fields - optimize
-        my %fk_map;
-        my $cond = $rel_info->{cond};
-        for my $sub_field (keys %$cond) {
-            my $our_field = $cond->{$sub_field};
-            $our_field =~ s/^self\.//x    or confess "panic $rel $our_field";
-            $sub_field =~ s/^foreign\.//x or confess "panic $rel $sub_field";
-            $fk_map{$our_field} = $sub_field;
-
-            die "$result_class already contains a value for '$our_field'\n"
-                if defined $hal->{$our_field}; # null is ok
-        }
-
-        # update this subitem (and any resources embedded in it)
-        my $subitem = $item->$rel();
-        $subitem = $self->_update_embedded_resources($subitem, $rel_hal, $rel_info->{source});
-
-        # copy the keys of the subitem up to the item we're about to update
-        warn "$result_class $rel: propagating keys: @{[ %fk_map ]}\n"
-            if $ENV{WEBAPI_DBIC_DEBUG};
-        while ( my ($ourfield, $subfield) = each %fk_map) {
-            $hal->{$ourfield} = $subitem->$subfield();
-        }
-
-        # XXX perhaps save $subitem to optimise prefetch handling?
-    }
+    # provide a hook for richer behaviour, eg HAL
+    my $_pre_update_resource_method = $self->_pre_update_resource_method;
+    $self->$_pre_update_resource_method($item, $hal, $result_class)
+        if $_pre_update_resource_method;
 
     # By default the DBIx::Class::Row update() call below will only update the
     # columns where %$hal contains different values to the ones in $item
@@ -165,13 +133,15 @@ sub update_resource {
                 unless $old_item; # set Location and thus 201 if Created not modified
         }
         else {
-            $item = $self->_update_embedded_resources($self->item, $hal, $self->item->result_class);
+            $item = $self->_do_update_resource($self->item, $hal, $self->item->result_class);
         }
+
+        $self->item($item);
 
         # called here because create_path() is too late for WM
         # and we need it to happen inside the transaction for rollback=1 to work
         # XXX requires 'self' prefetch to get any others
-        $self->render_item_into_body($item)
+        $self->render_item_into_body()
             if $item && $self->prefetch->{self};
 
         $schema->txn_rollback if $self->param('rollback'); # XXX
@@ -193,7 +163,7 @@ WebAPI::DBIC::Resource::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.001008
+version 0.001009
 
 =head1 NAME
 

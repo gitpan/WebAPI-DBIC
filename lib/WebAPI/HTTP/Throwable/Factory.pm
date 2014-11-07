@@ -1,5 +1,5 @@
 package WebAPI::HTTP::Throwable::Factory;
-$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001008';
+$WebAPI::HTTP::Throwable::Factory::VERSION = '0.001009';
 
 # I'm not sure what value there is here, but maybe I'm just forgetting the goodness.
 # Exception handling probably needs to be rethought.
@@ -59,7 +59,7 @@ WebAPI::HTTP::Throwable::Factory
 
 =head1 VERSION
 
-version 0.001008
+version 0.001009
 
 =head1 DESCRIPTION
 

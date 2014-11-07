@@ -1,13 +1,16 @@
 package WebAPI::DBIC::Resource::GenericSet;
-$WebAPI::DBIC::Resource::GenericSet::VERSION = '0.001008';
+$WebAPI::DBIC::Resource::GenericSet::VERSION = '0.001009';
 
 use Moo;
 use namespace::clean;
 
 extends 'WebAPI::DBIC::Resource::GenericCore';
-with    'WebAPI::DBIC::Resource::Role::SetRender',
-        'WebAPI::DBIC::Resource::Role::Set',
+with    'WebAPI::DBIC::Resource::Role::Set',
         'WebAPI::DBIC::Resource::Role::SetWritable',
+        # Enable HAL support:
+        'WebAPI::DBIC::Resource::Role::DBIC_HAL', # XXX move out?
+        'WebAPI::DBIC::Resource::Role::SetHAL',
+        'WebAPI::DBIC::Resource::Role::SetWritableHAL',
         ;
 
 1;
@@ -24,7 +27,7 @@ WebAPI::DBIC::Resource::GenericSet
 
 =head1 VERSION
 
-version 0.001008
+version 0.001009
 
 =head1 NAME
 

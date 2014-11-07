@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.001008';
+$WebAPI::DBIC::VERSION = '0.001009';
 use strict; # keep our kwalitee up!
 use warnings;
 1;
@@ -16,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.001008
+version 0.001009
 
 =head1 DESCRIPTION
 
@@ -150,10 +150,6 @@ L<WebAPI::DBIC::Resource::Role::DBIC> is responsible for interfacing with
 L<DBIx::Class>, 'rendering' individual records as resource data structures.
 It also interfaces with Path::Router to handle relationship linking.
 
-L<WebAPI::DBIC::Resource::Role::SetRender> is responsible for rendering an
-entire result set as either plain JSON or JSON+HAL by iterating over the
-individual items. For JSON+HAL it adds the paging links.
-
 L<WebAPI::DBIC::Resource::Role::Set> is responsible for accepting GET and HEAD
 requests for set resources (collections) and returning the results as JSON or JSON+HAL.
 
@@ -234,8 +230,7 @@ and L<WebAPI::DBIC::Resource::GenericItem>:
     package WebAPI::DBIC::Resource::GenericSet;
     use Moo;
     extends 'WebAPI::DBIC::Resource::GenericCore';
-    with    'WebAPI::DBIC::Resource::Role::SetRender',
-            'WebAPI::DBIC::Resource::Role::Set',
+    with    'WebAPI::DBIC::Resource::Role::Set',
             'WebAPI::DBIC::Resource::Role::SetWritable',
             ;
     1;
@@ -441,8 +436,6 @@ would include
 
 The "relation" links describe the relationships this resource has with other resources.
 
-Currently only 1-1 relationships (e.g., belongs_to) are and simple 1-N
-(has_many) relationships are supported and get C<_links>.
 Also see L</prefetch>.
 
 =head2 GET Item - Optional Parameters
@@ -476,6 +469,8 @@ would return:
 Here the _embedded person is a resource, not an array of resources, because the
 relationship is 1-1. For 1-N relationships the value of the _embedded key would
 be an array that contains the relevant resource records.
+
+Only works for response types that support embedded data, e.g, C<application/hal+json>.
 
 =head3 fields
 
@@ -600,8 +595,8 @@ The me.* parameters are only passed-through in paging links.
 
     ?prefetch=person,client_auth
 
-The resource may have 1-1 relationships with other resources.
-(E.g., a "belongs_to" relationship in DBIx::Class terminology.)
+The resource may have 1-1 and 1-N relationships with other resources.
+(E.g., "belongs_to" and "has_many" relationships in DBIx::Class terminology.)
 
 The relevant instances of related resources can be fetched and returned along
 with the requested resource by listing the relationships in a prefetch parameter.

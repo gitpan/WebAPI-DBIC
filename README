@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.001008
+    version 0.001009
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful
@@ -138,10 +138,6 @@ MODULES
     DBIx::Class, 'rendering' individual records as resource data structures.
     It also interfaces with Path::Router to handle relationship linking.
 
-    WebAPI::DBIC::Resource::Role::SetRender is responsible for rendering an
-    entire result set as either plain JSON or JSON+HAL by iterating over the
-    individual items. For JSON+HAL it adds the paging links.
-
     WebAPI::DBIC::Resource::Role::Set is responsible for accepting GET and
     HEAD requests for set resources (collections) and returning the results
     as JSON or JSON+HAL.
@@ -226,8 +222,7 @@ MODULES
         package WebAPI::DBIC::Resource::GenericSet;
         use Moo;
         extends 'WebAPI::DBIC::Resource::GenericCore';
-        with    'WebAPI::DBIC::Resource::Role::SetRender',
-                'WebAPI::DBIC::Resource::Role::Set',
+        with    'WebAPI::DBIC::Resource::Role::Set',
                 'WebAPI::DBIC::Resource::Role::SetWritable',
                 ;
         1;
@@ -413,9 +408,7 @@ OVERVIEW OF REPRESENTIONS AND ACTIONS
     The "relation" links describe the relationships this resource has with
     other resources.
 
-    Currently only 1-1 relationships (e.g., belongs_to) are and simple 1-N
-    (has_many) relationships are supported and get "_links". Also see
-    "prefetch".
+    Also see "prefetch".
 
   GET Item - Optional Parameters
    prefetch
@@ -447,6 +440,9 @@ OVERVIEW OF REPRESENTIONS AND ACTIONS
     because the relationship is 1-1. For 1-N relationships the value of the
     _embedded key would be an array that contains the relevant resource
     records.
+
+    Only works for response types that support embedded data, e.g,
+    "application/hal+json".
 
    fields
     Partial responses:
@@ -568,8 +564,9 @@ OVERVIEW OF REPRESENTIONS AND ACTIONS
    Prefetching Related Objects
         ?prefetch=person,client_auth
 
-    The resource may have 1-1 relationships with other resources. (E.g., a
-    "belongs_to" relationship in DBIx::Class terminology.)
+    The resource may have 1-1 and 1-N relationships with other resources.
+    (E.g., "belongs_to" and "has_many" relationships in DBIx::Class
+    terminology.)
 
     The relevant instances of related resources can be fetched and returned
     along with the requested resource by listing the relationships in a
