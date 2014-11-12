@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Router;
-$WebAPI::DBIC::Resource::Role::Router::VERSION = '0.001009';
+$WebAPI::DBIC::Resource::Role::Router::VERSION = '0.001010'; # TRIAL
 
 use Moo::Role;
 
@@ -34,7 +34,7 @@ WebAPI::DBIC::Resource::Role::Router
 
 =head1 VERSION
 
-version 0.001009
+version 0.001010
 
 =head1 DESCRIPTION
 

@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.001009
+    version 0.001010
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful

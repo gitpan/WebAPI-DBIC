@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Set;
-$WebAPI::DBIC::Resource::Role::Set::VERSION = '0.001009';
+$WebAPI::DBIC::Resource::Role::Set::VERSION = '0.001010'; # TRIAL
 
 use Moo::Role;
 
@@ -43,7 +43,7 @@ WebAPI::DBIC::Resource::Role::Set
 
 =head1 VERSION
 
-version 0.001009
+version 0.001010
 
 =head1 DESCRIPTION
 

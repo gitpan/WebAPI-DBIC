@@ -63,7 +63,7 @@
          }
       }
    },
-   "release_status" : "stable",
+   "release_status" : "testing",
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/timbunce/WebAPI-DBIC/issues"
@@ -76,6 +76,6 @@
       },
       "x_IRC" : "irc://irc.perl.org/#webapi"
    },
-   "version" : "0.001009"
+   "version" : "0.001010"
 }
 

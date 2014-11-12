@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Role::JsonEncoder;
-$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.001009';
+$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.001010'; # TRIAL
 
 use JSON::MaybeXS qw(JSON);
 
@@ -31,7 +31,7 @@ WebAPI::DBIC::Role::JsonEncoder
 
 =head1 VERSION
 
-version 0.001009
+version 0.001010
 
 =head1 NAME
 

@@ -82,11 +82,17 @@ lib/WebAPI/HTTP/Throwable/Role/JSONBody.pm
 run-chinook-demo.sh
 run-testschema-demo.sh
 t/00-compile.t
+t/10-basics-core.exp
 t/10-basics-core.t
+t/10-basics-hal.exp
 t/10-basics-hal.t
+t/11-paging-core.exp
 t/11-paging-core.t
+t/11-paging-hal.exp
 t/11-paging-hal.t
+t/12-searching-core.exp
 t/12-searching-core.t
+t/12-searching-hal.exp
 t/12-searching-hal.t
 t/13-fields-core.t
 t/13-fields-hal.t

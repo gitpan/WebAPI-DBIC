@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritableHAL;
-$WebAPI::DBIC::Resource::Role::SetWritableHAL::VERSION = '0.001009';
+$WebAPI::DBIC::Resource::Role::SetWritableHAL::VERSION = '0.001010'; # TRIAL
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -118,7 +118,7 @@ WebAPI::DBIC::Resource::Role::SetWritableHAL
 
 =head1 VERSION
 
-version 0.001009
+version 0.001010
 
 =head1 DESCRIPTION
 
