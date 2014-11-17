@@ -3,14 +3,14 @@
 use strict;
 use warnings;
 
-
+use 5.010;
 
 use ExtUtils::MakeMaker;
 
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "A composable RESTful JSON+HAL API to DBIx::Class schemas using roles and Web::Machine",
+  "ABSTRACT" => "A composable RESTful JSON API to DBIx::Class schemas using roles and Web::Machine",
   "AUTHOR" => "Tim Bunce <Tim.Bunce\@pobox.com>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0
@@ -18,6 +18,7 @@ my %WriteMakefileArgs = (
   "DISTNAME" => "WebAPI-DBIC",
   "EXE_FILES" => [],
   "LICENSE" => "perl",
+  "MIN_PERL_VERSION" => "5.010",
   "NAME" => "WebAPI::DBIC",
   "PREREQ_PM" => {
     "Carp" => 0,
@@ -43,6 +44,7 @@ my %WriteMakefileArgs = (
     "parent" => 0
   },
   "TEST_REQUIRES" => {
+    "Data::Printer" => 0,
     "Module::Pluggable" => 0,
     "Sort::Key" => 0,
     "Test::Compile" => "1.1.0",
@@ -51,9 +53,9 @@ my %WriteMakefileArgs = (
     "Test::More" => "0.98",
     "Test::Most" => 0,
     "Test::Pod" => 0,
-    "Test::Roo" => 0
+    "ToolSet" => 0
   },
-  "VERSION" => "0.001010",
+  "VERSION" => "0.002000",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -64,6 +66,7 @@ my %FallbackPrereqs = (
   "Carp" => 0,
   "DBIx::Class" => 0,
   "Data::Dumper::Concise" => 0,
+  "Data::Printer" => 0,
   "ExtUtils::MakeMaker" => 0,
   "HTTP::Headers::ActionPack" => 0,
   "HTTP::Throwable" => 0,
@@ -86,7 +89,7 @@ my %FallbackPrereqs = (
   "Test::More" => "0.98",
   "Test::Most" => 0,
   "Test::Pod" => 0,
-  "Test::Roo" => 0,
+  "ToolSet" => 0,
   "Try::Tiny" => 0,
   "URI" => 0,
   "Web::Machine" => "0.15",

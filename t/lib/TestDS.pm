@@ -23,10 +23,10 @@ our @EXPORT = qw(
 
 
 $Carp::Verbose = 1;
-
 $ENV{PLACK_ENV} ||= 'development'; # ensure env var is set
-
 $| = 1;
+
+my $previous_response;
 
 
 sub _get_authorization_user_pass {
@@ -51,25 +51,30 @@ sub run_request_spec_tests {
     close $fh;
 
     eq_or_diff slurp($got_file), slurp($exp_file),
-            "$test_file output matches expectations"
+            "$test_file output in $got_file matches $exp_file"
         and unlink $got_file;
 }
 
 
 sub _make_request_from_spec {
     my ($app, $fh, $test_config, $spec) = @_;
+    note "---";
 
     my ($config_name, @config_settings) = split /\n/, $test_config;
     $config_name =~ s/^Config:\s*//
         or die "'$config_name' doesn't begin with Config:\n";
     my %config_settings = map { split /:\s+/, $_, 2 } @config_settings;
 
-    my ($name, $curl, @rest) = split /\n/, $spec;
+    my ($name, $curl, @rest) = grep { !/^#/ } split /\n/, $spec;
     $name =~ s/^Name:\s+//
         or die "'$name' doesn't begin with Name:\n";
+    note "Name: $name";
     if ($curl =~ s/^SKIP\s*//) {
-        SKIP: { skip $curl, 1 }
+        SKIP: { skip $curl || $name, 1 }
         return;
+    }
+    if ($curl =~ s/^BAIL_OUT\s*//) {
+        return BAIL_OUT($curl);
     }
     $curl =~ s/^(GET|PUT|POST|DELETE|OPTIONS)\s//
         or die "'$curl' doesn't begin with GET, PUT, POST etc\n";
@@ -91,13 +96,18 @@ sub _make_request_from_spec {
         shift @url_params;
     }
 
+    # expand references to the result of the last request
+    $url =~ s/PREVIOUS\((.*?)\)/extract_from_previous_result($1)/ge;
+
     $url = URI->new( $url, 'http' );
     for my $url_param (@url_params) {
         my ($p_name, $p_value) = split /=>/, $url_param, 2;
+        die "URL parameter specification '$url_param' not in the form 'name=>value'\n"
+            unless defined $p_value;
         $p_value = eval $p_value;
         if ($@) {
             chomp $@;
-            die "Error evaluating $p_name param value '$p_value': $@ (for test name '$name')";
+            die "Error evaluating '$url_param' param value '$p_value': $@ (for test name '$name')";
         }
         $p_value = JSON->new->ascii->encode($p_value);
         $url->query_form( $url->query_form, $p_name, $p_value);
@@ -110,6 +120,7 @@ sub _make_request_from_spec {
 
         my $req = dsreq( $method => $url, $spec_headers, $data );
         my $res = shift->($req);
+        $previous_response = $res;
 
         printf $fh "Request:\n";
         printf $fh "%s %s\n", $method, $curl;          # original spec line
@@ -122,7 +133,9 @@ sub _make_request_from_spec {
         printf $fh "Response:\n";
         note $res->headers->as_string;
         printf $fh "%s %s\n", $res->code, $res->message;
-        for my $header ('Content-type') { # headers that are of interest
+        # report headers that are of interest
+        for my $header ('Content-type', 'Location') {
+            next unless defined scalar $res->header($header);
             printf $fh "%s: %s\n", $header, scalar $res->header($header);
         }
         if (my $content = $res->content) {
@@ -132,9 +145,15 @@ sub _make_request_from_spec {
             }
             printf $fh "%s\n", $content;
         }
+
     };
 
     return;
+}
+
+
+sub extract_from_previous_result {
+    croak "extract_from_previous_result not implemented yet"
 }
 
 
@@ -142,7 +161,7 @@ sub slurp {
     my ($file) = @_;
     my $fh = (ref $file eq 'GLOB') && $file;
     open($fh, "<", $file) unless $fh;
-    return do { local $/; <$fh> };
+    return do { local $/; scalar <$fh> };
 }
 
 

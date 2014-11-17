@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.001010'; # TRIAL
+$WebAPI::DBIC::VERSION = '0.002000';
 use strict; # keep our kwalitee up!
 use warnings;
 1;
@@ -16,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.001010
+version 0.002000
 
 =head1 DESCRIPTION
 
@@ -25,24 +25,28 @@ service API backed by DBIx::Class schemas.
 
 WebAPI::DBIC features include:
 
-* Use of the JSON+HAL (Hypertext Application Language) lean hypermedia type
+* Built on the strong foundations of L<Plack> and L<Web::Machine>, plus
+L<Path::Router> as the router. (Other routers could be supported.)
 
-* Automatic detection and exposure of result set relationships as HAL C<_links>
-
-* Supports safe robust multi-related-record CRUD transactions
-
-* Built on the strong foundations of L<Web::Machine> and L<Plack>, with
-L<Path::Router> as the router. (We aim to support other routers soon.)
-
-* Built as fine-grained roles for maximum reusability and extensibility
+* Built as fine-grained roles for maximum reusability and extensibility.
 
 * Integrates with other L<Plack> based applications.
 
-* The resource roles can be added to your existing application
+* The resource roles can be added to your existing application.
 
-* A built-in copy of the generic HAL API browser application
+* Rich support for multiple hypermedia types, including JSON API
+(application/vnd.api+json) and HAL (application/hal+json).
+The Collection+JSON hypermedia type could be added in future.
 
-* An example .psgi file that gives you an instant web service for any DBIx::Class schema
+* Automatic detection and exposure of result set relationships.
+
+* Supports safe robust multi-related-record CRUD transactions.
+
+* An example .psgi file that gives you an instant web service for any
+DBIx::Class schema
+
+* Includes a built-in copy of the generic HAL API browser application so you
+can be browsing your new API in mimutes.
 
 =head2 HAL - Hypertext Application Language
 
@@ -62,6 +66,39 @@ libraries available for most major programming languages. It's also simple
 enough that you can just deal with it as you would any other JSON.
 
 See L<http://stateless.co/hal_specification.html> for more details.
+
+=head2 JSON API
+
+The JSON API media type is designed to minimize both the number of requests and
+the amount of data transmitted between clients and servers. This efficiency is
+achieved without compromising readability, flexibility, and discoverability.
+
+See L<http://jsonapi.org/> for more details.
+
+For Ember, L<https://github.com/kurko/ember-json-api> can be used as an adaptor.
+
+STATUS:
+
+Support for JSON API within WebAPI::DBIC is maturing rapidly.
+
+Fetching compound documents, including "links" data (relationship templates)
+and "linked" (side-loaded/prefetch) resources, is supported.
+
+Main TO-DOs in approximate order of likely implementation:
+
+ - settle on how "type" is defined (currently it's derived from the router)
+ - provide "links" separately to prefetch logic
+ - support collection urls, e.g. /photos/1,2,3
+ - support relationship urls, e.g. /photos/1/links/photographer
+ - support include= in addition to prefetch=
+ - support sort= in addition to order=
+ - support multiple sorts, e.g. sort[posts]=-created,title&sort[people]=name
+ - support the "name[type]" style of field= param value
+ - support creating resources via the application/vnd.api+json media type
+ - support updating resources via the application/vnd.api+json media type
+ - support updating relationships via the application/vnd.api+json media type
+ - support the suggest error format
+ - support PATCH requests
 
 =head2 Web::Machine
 
@@ -102,7 +139,7 @@ DBIx::Class schema. This is what makes the API discoverable and browseable.
 
 =head1 NAME
 
-WebAPI::DBIC - A composable RESTful JSON+HAL API to DBIx::Class schemas using roles and Web::Machine
+WebAPI::DBIC - A composable RESTful JSON API to DBIx::Class schemas using roles and Web::Machine
 
 =head1 STATUS
 
@@ -144,14 +181,14 @@ C<WEBAPI_DBIC_WRITABLE> environment variable.
 
 =head1 MODULES
 
-=head2 Roles
+=head2 Core Roles
 
 L<WebAPI::DBIC::Resource::Role::DBIC> is responsible for interfacing with
 L<DBIx::Class>, 'rendering' individual records as resource data structures.
 It also interfaces with Path::Router to handle relationship linking.
 
 L<WebAPI::DBIC::Resource::Role::Set> is responsible for accepting GET and HEAD
-requests for set resources (collections) and returning the results as JSON or JSON+HAL.
+requests for set resources (collections) and returning the results as JSON.
 
 L<WebAPI::DBIC::Resource::Role::SetWritable> is responsible for accepting POST
 request for set resources. It handles the recursive creation of related records.
@@ -159,7 +196,7 @@ Related records can be nested to any depth and are created from the bottom up
 within a transaction.
 
 L<WebAPI::DBIC::Resource::Role::Item> is responsible for GET and HEAD requests
-for single item resources and returning the results as JSON or JSON+HAL.
+for single item resources and returning the results as JSON.
 
 L<WebAPI::DBIC::Resource::Role::ItemWritable> is responsible for accepting PUT
 and DELETE requests for single item resources. It handles the recursive update of
@@ -179,6 +216,36 @@ username and password for the database connection.
 L<WebAPI::DBIC::Resource::Role::DBICParams> is responsible for handling request
 parameters related to DBIx::Class such as C<page>, C<rows>, C<order>, C<me>,
 C<prefetch>, C<fields> etc.
+
+=head2 JSON+HAL Roles
+
+These roles are used to handle requests using the C<application/hal+json> media type
+and follow the naming convention used above.
+
+L<WebAPI::DBIC::Resource::Role::DBIC_HAL>
+
+L<WebAPI::DBIC::Resource::Role::SetHAL>
+
+L<WebAPI::DBIC::Resource::Role::SetWritableHAL>
+
+L<WebAPI::DBIC::Resource::Role::ItemHAL>
+
+L<WebAPI::DBIC::Resource::Role::ItemWritableHAL>
+
+=head2 JSON API Roles
+
+These roles are used to handle requests using the C<application/vnd.api+json> media type
+and follow the naming convention used above.
+
+L<WebAPI::DBIC::Resource::Role::DBIC_JSONAPI>
+
+L<WebAPI::DBIC::Resource::Role::SetJSONAPI>
+
+L<WebAPI::DBIC::Resource::Role::SetWritableJSONAPI>
+
+L<WebAPI::DBIC::Resource::Role::ItemJSONAPI>
+
+L<WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI>
 
 =head2 Utility Roles
 
@@ -442,43 +509,150 @@ Also see L</prefetch>.
 
 =head3 prefetch
 
-    prefetch=relationship
-    prefetch=relationship1,relationship2
+Prefetch is a mechanism in DBIx::Class by which related resultsets can be returned
+along with the primary resultset. This prefetching is performed by a single query and
+so improves efficiency by reducing the number of database requests.
 
-The prefetch parameter enables one or more related resources to be fetched and
-embedded in the response. For example:
+In WebAPI::DBIC the C<prefetch> parameter enables use of DBIx::Class prefetch and
+so allows any data in related resultsets to be returned as part of the same
+response. This allows the user to make one GET to return most, and possibly all,
+of the data needed by the requesting application. This reduces the number of HTTP requests.
 
-    GET ~/ecosystems/1?prefetch=person
+Note that prefetch is only effective for response types that support embedded
+data, e.g, C<application/hal+json>.
 
-would return:
+Prefetching in WebAPI::DBIC and DBIx::Class uses the accessor names defined in the
+Result class for the given Resultset. These should be used in the prefetch parameter.
+
+The following examples assume a Schema setup similar to the following:
+
+    package MyApp::Schema::Result::Artist;
+    __PACKAGE__->has_many('albums'     => 'MyApp::Schema::Result::CD', 'album_artist');
+    __PACKAGE__->has_many('cd_artists' => 'MyApp::Schama::Result::CDArtist', 'artistid');
+    __PACKAGE__->belongs_to('producer' => 'MyApp::Schema::Result::Producer', 'producerid');
+    __PACKAGE__->many_to_many('cds' => 'cd_artists', 'cd');
+
+    package MyApp::Schema::Result::CD;
+    __PACKAGE__->has_many('cd_artists'     => 'MyApp::Schema::Result::CDArtist', 'cdid');
+    __PACKAGE__->belongs_to('album_artist' => 'MyApp::Schema::Result::Artist', 'album_artist');
+    __PACKAGE__->many_to_many('artists' => 'cd_artists', 'artist');
+
+    package MyApp::Schema::Result::CDArtists;
+    __PACKAGE__->belongs_to('cd' => 'MyApp::Schema::Result::CD', 'cdid');
+    __PACKAGE__->belongs_to('artist' => 'MyApp::Schema::Result::Artist', 'artistid');
+
+=head4 comma seperated lists
+
+Where all related data for individual directly related resultsets are desired
+then a comma seperated list can be provided to the the prefetch parameter
+
+    artist/1?prefetch=producer,albums
+
+(Note that you can't provide the prefetch parameter multiple times to achieve
+the same result.)
+
+This would return the following JSON+HAL:
 
     {
-        id: 1,
-        person_id: 2,  # foreign key
-        ...
-        _links: { ... },
+        artistid: 1,
+        producerid: 1,
         _embedded: {
-            person: {  # prefetched using person_id
-                id: 2,
-                ...
-                _links: { ... },
+            producer: {
+                producer: id,
             },
+            albums: [{
+                cdid: 1,
+                album_artist: 1,
+            },{
+                cdid: 2,
+                album_artist: 1,
+            }],
+        },
+        _links: {
+            producer: /producer/1,
+            albums: /artists/1?albums~json={-or: [{cdid: 1}, {cdid: 2}]} # XXX not correct
         }
     }
 
-Here the _embedded person is a resource, not an array of resources, because the
-relationship is 1-1. For 1-N relationships the value of the _embedded key would
-be an array that contains the relevant resource records.
+=head4 json
 
-Only works for response types that support embedded data, e.g, C<application/hal+json>.
+The C<prefetch> parameter can be specified as a more complex JSON-encoded
+parameter value. This allows for the full use of prefetch chains.
+Using key value pairs and lists, prefetches can be nested from one resultset to
+another:
+
+    artist/1?prefetch~json={["producer","albums"]}
+
+This would produce the same results as above:
+
+    artist/1?prefetch~json={["producer","cd_artists",{"cds":"album_artist"}]}
+
+would producer the following JSON+HAL:
+
+    {
+        artistid: 1,
+        producerid: 1,
+        _embedded: {
+            producer: {
+                producer: id,
+            },
+            cd_artists: [{
+                artistsid: 1,
+                cdid: 1,
+                _embedded: {
+                    cd: {
+                        cdid: 1,
+                        album_artist: 1,
+                        _embedded: {
+                            album_artist: {
+                                artistid: 1,
+                                producerid: 1,
+                            },
+                        },
+                        _links: {
+                            /album_artist: /artist/1
+                        },
+                    },
+                },
+                _links: {
+                    cd: /cd/1
+                },
+            }],
+        },
+        _links: {
+            producer: /producer/1,
+            cd_artists: /cdartists?artistid=1&cdid=1,
+        }
+    }
+
+NOTE: many_to_many relationships can't be supported as they are not true relationships
+the related data should be prefetched using the has_many relationship and their join
+table as in the above example.
+
+=head4 where on prefetch
+
+The WHERE clause generated can filter results based on related data, as you
+would expect in a SQL style JOIN. To refer to fields in related resultsets,
+prefix the name of the field with the name of the relationship:
+
+    /artist?prefetch=albumns&albums.title='My CD Title'
+
+This would return all artists which have an album with the title 'My CD Title'.
 
 =head3 fields
 
-Partial responses:
+The fields parameter can be used to limit the fields returned in the response.
+For example:
 
     fields=field1,field2
 
-XXX Currently doesn't work for limiting the fields of prefetched relations.
+This also works
+in combination with the prefetch parameter. As with querying on prefetched relations, the
+relation accessor should be appended before the field name in question.
+
+    artists/1?prefetch=albums&fields=artistid,albumns.title
+
+For more information on PREFETCHING and JOINS see L<DBIx::Class::Resultset#PREFETCHING>
 
 =head3 with
 

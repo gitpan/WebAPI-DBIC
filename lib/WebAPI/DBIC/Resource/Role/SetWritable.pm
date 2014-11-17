@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritable;
-$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.001010'; # TRIAL
+$WebAPI::DBIC::Resource::Role::SetWritable::VERSION = '0.002000';
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -66,7 +66,7 @@ sub create_resource {
 
     # called here because create_path() is too late for Web::Machine
     $self->render_item_into_body(item => $item)
-        if $self->prefetch->{self};
+        if grep {defined $_->{self}} @{$self->prefetch||[]};
 
     return $item;
 }
@@ -86,7 +86,7 @@ WebAPI::DBIC::Resource::Role::SetWritable
 
 =head1 VERSION
 
-version 0.001010
+version 0.002000
 
 =head1 DESCRIPTION
 

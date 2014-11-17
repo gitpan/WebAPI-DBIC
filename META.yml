@@ -1,8 +1,9 @@
 ---
-abstract: 'A composable RESTful JSON+HAL API to DBIx::Class schemas using roles and Web::Machine'
+abstract: 'A composable RESTful JSON API to DBIx::Class schemas using roles and Web::Machine'
 author:
   - 'Tim Bunce <Tim.Bunce@pobox.com>'
 build_requires:
+  Data::Printer: '0'
   Module::Pluggable: '0'
   Sort::Key: '0'
   Test::Compile: v1.1.0
@@ -11,7 +12,7 @@ build_requires:
   Test::More: '0.98'
   Test::Most: '0'
   Test::Pod: '0'
-  Test::Roo: '0'
+  ToolSet: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 0
@@ -43,9 +44,10 @@ requires:
   Web::Machine: '0.15'
   namespace::clean: '0'
   parent: '0'
+  perl: '5.010'
 resources:
   IRC: irc://irc.perl.org/#webapi
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.001010'
+version: '0.002000'

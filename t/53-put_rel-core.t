@@ -1,30 +1,19 @@
 #!/usr/bin/env perl
 
-use Test::Most;
-use Plack::Test;
-use Test::HTTP::Response;
-use JSON::MaybeXS;
-use Devel::Dwarn;
 
 use lib "t/lib";
-use TestDS;
-use WebAPI::DBIC::WebApp;
+use TestKit;
 
-use Test::Roo;
-with 'TestRole::Schema';
+fixtures_ok qw/basic/;
 
-after setup => sub {
-    my ($self) = @_;
-    $self->load_fixtures(qw(basic));
-};
-
-
-test "===== Update a resource and related resources via PUT =====" => sub {
+subtest "===== Update a resource and related resources via PUT =====" => sub {
     my ($self) = @_;
 
     my $app = WebAPI::DBIC::WebApp->new({
-        schema => $self->schema,
+        schema => Schema,
     })->to_psgi_app;
+
+    run_request_spec_tests($app, \*DATA);
 
     my $orig_item;
     my $orig_location;
@@ -66,6 +55,23 @@ test "===== Update a resource and related resources via PUT =====" => sub {
 
 };
 
-run_me();
-
 done_testing();
+
+__DATA__
+Config:
+
+Name: POST to the set to create a Track to edit (on an existing CD)
+POST /track?prefetch=self
+{ "title":"Just One More", "position":4200, "cd":2 }
+
+Name: update the title (19 hardwired for now) and prefetch self and disc (ignored)
+PUT /track/19?prefetch=self,disc
+{ "title":"Just One More (remix)" }
+
+Name: update the track id (primary key)
+# TODO this ought to return a Location header
+PUT /track/19?prefetch=self
+{ "trackid":1900 }
+
+Name: delete the track we just added
+DELETE /track/1900

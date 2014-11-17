@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericItem;
-$WebAPI::DBIC::Resource::GenericItem::VERSION = '0.001010'; # TRIAL
+$WebAPI::DBIC::Resource::GenericItem::VERSION = '0.002000';
 
 use Moo;
 use namespace::clean;
@@ -11,6 +11,10 @@ with    'WebAPI::DBIC::Resource::Role::Item',
         'WebAPI::DBIC::Resource::Role::DBIC_HAL',
         'WebAPI::DBIC::Resource::Role::ItemHAL',
         'WebAPI::DBIC::Resource::Role::ItemWritableHAL',
+        # Enable JSON API support:
+        'WebAPI::DBIC::Resource::Role::DBIC_JSONAPI',
+        'WebAPI::DBIC::Resource::Role::ItemJSONAPI',
+        'WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI',
         ;
 
 1;
@@ -27,7 +31,7 @@ WebAPI::DBIC::Resource::GenericItem
 
 =head1 VERSION
 
-version 0.001010
+version 0.002000
 
 =head1 NAME
 

@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritableHAL;
-$WebAPI::DBIC::Resource::Role::SetWritableHAL::VERSION = '0.001010'; # TRIAL
+$WebAPI::DBIC::Resource::Role::SetWritableHAL::VERSION = '0.002000';
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -39,7 +39,7 @@ sub create_resources_from_hal { # XXX unify with create_resource in SetWritable,
     # but it has to be below the auth layer which switches schemas
     $schema->txn_do(sub {
 
-        $item = $self->_create_embedded_resources($hal, $self->set->result_class);
+        $item = $self->_create_embedded_resources_from_hal($hal, $self->set->result_class);
 
         # resync with what's (now) in the db to pick up defaulted fields etc
         $item->discard_changes();
@@ -47,7 +47,7 @@ sub create_resources_from_hal { # XXX unify with create_resource in SetWritable,
         # called here because create_path() is too late for Web::Machine
         # and we need it to happen inside the transaction for rollback=1 to work
         $self->render_item_into_body(item => $item, prefetch => $self->prefetch)
-            if $self->prefetch->{self};
+            if grep {defined $_->{self}} @{$self->prefetch||[]};
 
         $schema->txn_rollback if $self->param('rollback'); # XXX
     });
@@ -59,7 +59,7 @@ sub create_resources_from_hal { # XXX unify with create_resource in SetWritable,
 # recurse to create resources in $hal->{_embedded}
 #   and update coresponding attributes in $hal
 # then create $hal itself
-sub _create_embedded_resources {
+sub _create_embedded_resources_from_hal {
     my ($self, $hal, $result_class) = @_;
 
     my $links    = delete $hal->{_links};
@@ -91,7 +91,7 @@ sub _create_embedded_resources {
         }
 
         # create this subitem (and any resources embedded in it)
-        my $subitem = $self->_create_embedded_resources($rel_hal, $rel_info->{source});
+        my $subitem = $self->_create_embedded_resources_from_hal($rel_hal, $rel_info->{source});
 
         # copy the keys of the subitem up to the item we're about to create
         warn "$result_class $rel: propagating keys: @{[ %fk_map ]}\n"
@@ -118,7 +118,7 @@ WebAPI::DBIC::Resource::Role::SetWritableHAL
 
 =head1 VERSION
 
-version 0.001010
+version 0.002000
 
 =head1 DESCRIPTION
 

@@ -1,4 +1,5 @@
 # https://metacpan.org/pod/distribution/Module-CPANfile/lib/cpanfile.pod
+requires 'perl', '5.010';
 requires 'Carp';
 requires 'DBIx::Class';
 requires 'HTTP::Throwable';
@@ -28,7 +29,8 @@ on test => sub {
    requires 'Test::HTTP::Response';
    requires 'Test::More' => '0.98';
    requires 'Test::Most';
-   requires 'Test::Roo';
    requires 'Test::Pod';
    requires 'Test::Compile', 'v1.1.0';
+   requires 'ToolSet';
+   requires 'Data::Printer';
 };

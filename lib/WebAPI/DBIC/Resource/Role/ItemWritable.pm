@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemWritable;
-$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.001010'; # TRIAL
+$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.002000';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -141,8 +141,7 @@ sub update_resource {
         # called here because create_path() is too late for WM
         # and we need it to happen inside the transaction for rollback=1 to work
         # XXX requires 'self' prefetch to get any others
-        $self->render_item_into_body()
-            if $item && $self->prefetch->{self};
+        $self->render_item_into_body() if grep {defined $_->{self}} @{$self->prefetch||[]};
 
         $schema->txn_rollback if $self->param('rollback'); # XXX
     });
@@ -163,7 +162,7 @@ WebAPI::DBIC::Resource::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.001010
+version 0.002000
 
 =head1 NAME
 

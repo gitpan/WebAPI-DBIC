@@ -1,5 +1,10 @@
 Changes file for WebAPI::DBIC
 
+0.002000  2014-11-17 23:01:09+00:00 Europe/Dublin
+
+  - Added initial support for JSON API application/vnd.api+json media type
+  - Added support for arbitrary depth/complexity of prefetch (Mike Francis)
+
 0.001010  2014-11-12 14:05:00+00:00 Europe/Dublin (TRIAL RELEASE)
 
   - Prefetch now supports has_many relationships on item and set resources.
