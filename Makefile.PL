@@ -22,7 +22,7 @@ my %WriteMakefileArgs = (
   "NAME" => "WebAPI::DBIC",
   "PREREQ_PM" => {
     "Carp" => 0,
-    "DBIx::Class" => 0,
+    "DBIx::Class" => "0.08250",
     "Data::Dumper::Concise" => 0,
     "HTTP::Headers::ActionPack" => 0,
     "HTTP::Throwable" => 0,
@@ -53,9 +53,10 @@ my %WriteMakefileArgs = (
     "Test::More" => "0.98",
     "Test::Most" => 0,
     "Test::Pod" => 0,
-    "ToolSet" => 0
+    "ToolSet" => 0,
+    "autodie" => 0
   },
-  "VERSION" => "0.002000",
+  "VERSION" => "0.002001",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -64,7 +65,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "DBIx::Class" => 0,
+  "DBIx::Class" => "0.08250",
   "Data::Dumper::Concise" => 0,
   "Data::Printer" => 0,
   "ExtUtils::MakeMaker" => 0,
@@ -93,6 +94,7 @@ my %FallbackPrereqs = (
   "Try::Tiny" => 0,
   "URI" => 0,
   "Web::Machine" => "0.15",
+  "autodie" => 0,
   "namespace::clean" => 0,
   "parent" => 0
 );

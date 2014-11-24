@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Router;
-$WebAPI::DBIC::Router::VERSION = '0.002000';
+$WebAPI::DBIC::Router::VERSION = '0.002001';
 
 use Moo;
 
@@ -57,7 +57,7 @@ WebAPI::DBIC::Router
 
 =head1 VERSION
 
-version 0.002000
+version 0.002001
 
 =head1 DESCRIPTION
 

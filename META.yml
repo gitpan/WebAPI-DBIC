@@ -13,6 +13,7 @@ build_requires:
   Test::Most: '0'
   Test::Pod: '0'
   ToolSet: '0'
+  autodie: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 0
@@ -24,7 +25,7 @@ meta-spec:
 name: WebAPI-DBIC
 requires:
   Carp: '0'
-  DBIx::Class: '0'
+  DBIx::Class: '0.08250'
   Data::Dumper::Concise: '0'
   HTTP::Headers::ActionPack: '0'
   HTTP::Throwable: '0'
@@ -50,4 +51,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.002000'
+version: '0.002001'

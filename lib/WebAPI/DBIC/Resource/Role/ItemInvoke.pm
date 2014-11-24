@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemInvoke;
-$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.002000';
+$WebAPI::DBIC::Resource::Role::ItemInvoke::VERSION = '0.002001';
 
 use Scalar::Util qw(blessed);
 
@@ -90,7 +90,7 @@ WebAPI::DBIC::Resource::Role::ItemInvoke
 
 =head1 VERSION
 
-version 0.002000
+version 0.002001
 
 =head1 NAME
 

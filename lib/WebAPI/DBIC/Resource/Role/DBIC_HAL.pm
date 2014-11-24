@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBIC_HAL;
-$WebAPI::DBIC::Resource::Role::DBIC_HAL::VERSION = '0.002000';
+$WebAPI::DBIC::Resource::Role::DBIC_HAL::VERSION = '0.002001';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -170,7 +170,7 @@ WebAPI::DBIC::Resource::Role::DBIC_HAL
 
 =head1 VERSION
 
-version 0.002000
+version 0.002001
 
 =head1 NAME
 

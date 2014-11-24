@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Util;
-$WebAPI::DBIC::Util::VERSION = '0.002000';
+$WebAPI::DBIC::Util::VERSION = '0.002001';
 # based on webmachine-perl/lib/Web/Machine/Util.pm
 #
 # ABSTRACT: General Utility module
@@ -50,7 +50,7 @@ WebAPI::DBIC::Util - General Utility module
 
 =head1 VERSION
 
-version 0.002000
+version 0.002001
 
 =head1 SYNOPSIS
 
