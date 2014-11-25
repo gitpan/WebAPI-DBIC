@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.002001
+    version 0.002002
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful
@@ -618,10 +618,25 @@ OVERVIEW OF REPRESENTIONS AND ACTIONS
     querying on prefetched relations, the relation accessor should be
     appended before the field name in question.
 
-        artists/1?prefetch=albums&fields=artistid,albumns.title
+        /artist/1?prefetch=albums&fields=artistid,albumns.title
 
     For more information on PREFETCHING and JOINS see
     DBIx::Class::Resultset#PREFETCHING
+
+    NOTE: DBIx::Class does not support the returning of related data if the
+    relationship accessor for that data matches a column on the requested
+    Set or Item but the fields parameter does not include that column. You
+    must explicitly request fields if prefetching a relation with the same
+    name
+
+    Using the above example. If the artist has a producer column/field then
+    the following is invalid:
+
+        /artist/1?prefetch=producer&fields=artistid,producer.producer.producerid
+
+    but the following is valid:
+
+        /artist/1?prefetch=producer&fields=artistid,producer,producer.producer.producerid
 
    with
     The "with" parameter is used to control optional items within responses.

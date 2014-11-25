@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetWritableJSONAPI;
-$WebAPI::DBIC::Resource::Role::SetWritableJSONAPI::VERSION = '0.002001';
+$WebAPI::DBIC::Resource::Role::SetWritableJSONAPI::VERSION = '0.002002';
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -118,7 +118,7 @@ WebAPI::DBIC::Resource::Role::SetWritableJSONAPI
 
 =head1 VERSION
 
-version 0.002001
+version 0.002002
 
 =head1 DESCRIPTION
 

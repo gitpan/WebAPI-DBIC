@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::SetJSONAPI;
-$WebAPI::DBIC::Resource::Role::SetJSONAPI::VERSION = '0.002001';
+$WebAPI::DBIC::Resource::Role::SetJSONAPI::VERSION = '0.002002';
 
 use Moo::Role;
 
@@ -41,7 +41,7 @@ WebAPI::DBIC::Resource::Role::SetJSONAPI
 
 =head1 VERSION
 
-version 0.002001
+version 0.002002
 
 =head1 DESCRIPTION
 

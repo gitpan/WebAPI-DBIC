@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 package WebAPI::DBIC::WebApp;
-$WebAPI::DBIC::WebApp::VERSION = '0.002001';
+$WebAPI::DBIC::WebApp::VERSION = '0.002002';
 use strict;
 use warnings;
 
@@ -289,7 +289,7 @@ WebAPI::DBIC::WebApp
 
 =head1 VERSION
 
-version 0.002001
+version 0.002002
 
 =head1 AUTHOR
 

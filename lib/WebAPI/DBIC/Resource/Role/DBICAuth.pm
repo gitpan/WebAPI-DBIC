@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBICAuth;
-$WebAPI::DBIC::Resource::Role::DBICAuth::VERSION = '0.002001';
+$WebAPI::DBIC::Resource::Role::DBICAuth::VERSION = '0.002002';
 
 use Carp qw(confess);
 use Try::Tiny;
@@ -57,7 +57,7 @@ sub is_authorized {
     }
     elsif ($http_auth_type =~ /^basic/i) {
 
-        my $auth_realm = $self->set->result_source->schema->storage->connect_info->[0] # dsn
+        my $auth_realm = $self->set->result_source->schema->storage->connect_info->[0]->{dsn} # dsn
             or die "panic: no dsn set";
 
         if ( $auth_header ) {
@@ -86,7 +86,7 @@ WebAPI::DBIC::Resource::Role::DBICAuth
 
 =head1 VERSION
 
-version 0.002001
+version 0.002002
 
 =head1 NAME
 
