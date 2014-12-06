@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Router;
-$WebAPI::DBIC::Resource::Role::Router::VERSION = '0.002002';
+$WebAPI::DBIC::Resource::Role::Router::VERSION = '0.002003';
 
 use Moo::Role;
 
@@ -8,15 +8,18 @@ use Moo::Role;
 sub uri_for { ## no critic (RequireArgUnpacking)
     my $self = shift; # %pk in @_
 
-    my $env = $self->request->env;
-    my $router = $env->{'plack.router'};
-
-    my $url = $router->uri_for(@_)
+    my $url = $self->router->uri_for(@_)
         or return;
 
+    my $env = $self->request->env;
     my $prefix = $env->{SCRIPT_NAME};
     return "$prefix/$url" unless wantarray;
     return ($prefix, $url);
+}
+
+
+sub router {
+    return shift->request->env->{'plack.router'};
 }
 
 
@@ -34,7 +37,7 @@ WebAPI::DBIC::Resource::Role::Router
 
 =head1 VERSION
 
-version 0.002002
+version 0.002003
 
 =head1 DESCRIPTION
 

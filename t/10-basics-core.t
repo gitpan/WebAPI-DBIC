@@ -5,7 +5,7 @@ use lib 't/lib';
 use TestKit;
 
 
-fixtures_ok qw/basic/;
+fixtures_ok [qw/basic/];
 
 subtest '===== basics - specs =====' => sub {
     my ($self) = @_;
@@ -37,3 +37,6 @@ GET /gig/1/2014-01-01T01:01:01Z
 
 Name: get different item with multi-field key
 GET /gig/2/2014-06-30T19:00:00Z
+
+Name: get view data
+GET /classic_albums

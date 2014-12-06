@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.002002';
+$WebAPI::DBIC::VERSION = '0.002003';
 use strict; # keep our kwalitee up!
 use warnings;
 1;
@@ -16,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.002002
+version 0.002003
 
 =head1 DESCRIPTION
 
@@ -43,7 +43,7 @@ The Collection+JSON hypermedia type could be added in future.
 * Supports safe robust multi-related-record CRUD transactions.
 
 * An example .psgi file that gives you an instant web service for any
-DBIx::Class schema
+DBIx::Class schema.
 
 * Includes a built-in copy of the generic HAL API browser application so you
 can be browsing your new API in mimutes.
@@ -83,6 +83,7 @@ Support for JSON API within WebAPI::DBIC is maturing rapidly.
 
 Fetching compound documents, including "links" data (relationship templates)
 and "linked" (side-loaded/prefetch) resources, is supported.
+The sort= parameter is supported, in it's simple form.
 
 Main TO-DOs in approximate order of likely implementation:
 
@@ -91,7 +92,6 @@ Main TO-DOs in approximate order of likely implementation:
  - support collection urls, e.g. /photos/1,2,3
  - support relationship urls, e.g. /photos/1/links/photographer
  - support include= in addition to prefetch=
- - support sort= in addition to order=
  - support multiple sorts, e.g. sort[posts]=-created,title&sort[people]=name
  - support the "name[type]" style of field= param value
  - support creating resources via the application/vnd.api+json media type
@@ -110,7 +110,7 @@ See L<https://raw.githubusercontent.com/basho/webmachine/develop/docs/http-heade
 for an image of the state machine.
 
 By building on Web::Machine, WebAPI::DBIC removes the need to implement all the
-logic needed for accurate and full-features HTTP protocol behaviour.
+logic needed for accurate and full-featured HTTP protocol behaviour.
 You just provide small pieces of logic at the decision points you care about
 and Web::Machine looks after the rest.
 
@@ -120,8 +120,8 @@ Web::Machine provides the logic to handle a HTTP request for a I<single resource
 
 With WebAPI::DBIC those resources typically represent a DBIx::Class result set,
 a row, or a method invocation on a row. They are implemented as a subclass of
-L<Web::Machine::Resource> that consumes a some set of WebAPI::DBIC roles that add
-the specific desired functionality.
+L<Web::Machine::Resource> that consumes a some set of WebAPI::DBIC roles which add
+the desired functionality to the resource.
 
 =head2 Path::Router
 
@@ -214,7 +214,7 @@ using the DBI DSN as the realm name and the return username and password as the
 username and password for the database connection.
 
 L<WebAPI::DBIC::Resource::Role::DBICParams> is responsible for handling request
-parameters related to DBIx::Class such as C<page>, C<rows>, C<order>, C<me>,
+parameters related to DBIx::Class such as C<page>, C<rows>, C<sort>, C<me>,
 C<prefetch>, C<fields> etc.
 
 =head2 JSON+HAL Roles
@@ -728,19 +728,22 @@ fetch very large numbers of rows. The default is a small number.
 
 Partial results, as for GET Item above.
 
-=head3 Ordering
+=head3 Sorting and Ordering
 
-    order=field1
-    order=field1 desc
-    order=field1 asc,field2 asc
+    sort=field1
+    sort=field1,-field2
 
-A comma-separated list of one or more ordering clauses, each consisting of a
-field designator followed by an optional direction.  Direction can be asc or
-desc and defaults to asc.
+A comma-separated list of one or more ordering clauses. Each clause consists of a
+field designator with an optional C<-> prefix to indicate descending order
+instead of ascending.
 
 Field names can refer to fields of L</prefetch> relations. For example:
 
-    ~/ecosystems_people?prefetch=person,client_auth&order=client_auth.username
+    ~/ecosystems_people?prefetch=person,client_auth&sort=client_auth.username
+
+The parameter name C<order> can be used as a deprecated alias for C<sort>.
+The direction can also be specified by appending either "C< asc>" or "C< desc>"
+to the field designator. This syntax is deprecated.
 
 =head3 Filtering
 
@@ -822,7 +825,7 @@ For example: GET /ecosystems_people?prefetch=person,client_auth
 
 Only return distinct results.
 
-Currently this parameter requires that both the fields and order parameters are
+Currently this parameter requires that both the fields and sort parameters are
 provided, and have identical values.
 
 The results are returned in HAL format, i.e., as an array of objects in an

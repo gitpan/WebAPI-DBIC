@@ -3,6 +3,7 @@
 requires 'perl', '5.010';
 
 requires 'DBIx::Class', '0.08250'; # https://github.com/timbunce/WebAPI-DBIC/issues/14
+requires 'SQL::Translator', '0.11018';
 
 requires 'Web::Machine', '0.15';
 
@@ -21,9 +22,11 @@ requires 'Plack', '1.0033';
 requires 'Plack::App::File';
 requires 'Plack::App::Path::Router', '0.06';
 requires 'Scalar::Util';
+requires 'String::CamelCase';
 requires 'Sub::Exporter';
 requires 'Sub::Quote';
 requires 'Try::Tiny';
+requires 'Types::Serialiser';
 requires 'URI';
 requires 'Data::Dumper::Concise'; # for Dwarn
 
@@ -39,4 +42,5 @@ on test => sub {
    requires 'Test::Compile', 'v1.1.0';
    requires 'ToolSet';
    requires 'Data::Printer';
+   requires 'DBIx::Class::Fixtures', '1.001025';
 };
