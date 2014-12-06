@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::DBIC_JSONAPI;
-$WebAPI::DBIC::Resource::Role::DBIC_JSONAPI::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::JSONAPI::Role::DBIC;
+$WebAPI::DBIC::Resource::JSONAPI::Role::DBIC::VERSION = '0.002004';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -253,15 +253,15 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::DBIC_JSONAPI
+WebAPI::DBIC::Resource::JSONAPI::Role::DBIC
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::DBIC_JSONAPI - a role with core JSON API methods for DBIx::Class resources
+WebAPI::DBIC::Resource::JSONAPI::Role::DBIC - a role with core JSON API methods for DBIx::Class resources
 
 =head1 AUTHOR
 

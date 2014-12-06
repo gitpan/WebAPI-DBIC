@@ -1,13 +1,14 @@
-package WebAPI::DBIC::Resource::Role::ItemHAL;
-$WebAPI::DBIC::Resource::Role::ItemHAL::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::HAL::Role::Set;
+$WebAPI::DBIC::Resource::HAL::Role::Set::VERSION = '0.002004';
 
 use Moo::Role;
 
+use Carp qw(confess);
 
 requires '_build_content_types_provided';
-requires 'render_item_as_hal_hash';
 requires 'encode_json';
-requires 'item';
+requires 'render_set_as_hal';
+requires 'set';
 
 
 around '_build_content_types_provided' => sub {
@@ -18,7 +19,9 @@ around '_build_content_types_provided' => sub {
     return $types;
 };
 
-sub to_json_as_hal { return $_[0]->encode_json($_[0]->render_item_as_hal_hash($_[0]->item)) }
+
+sub to_json_as_hal   { return $_[0]->encode_json($_[0]->render_set_as_hal(  $_[0]->set)) }
+
 
 1;
 
@@ -30,21 +33,22 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemHAL
+WebAPI::DBIC::Resource::HAL::Role::Set
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
-Provides methods to support the C<application/hal+json> media type
-for GET and HEAD requests for requests representing individual resources,
-e.g. a single row of a database table.
+Handles GET and HEAD requests for requests representing set resources, e.g.
+the rows of a database table.
+
+Supports the C<application/hal+json> content type.
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemHAL - methods related to handling HAL requests for item resources
+WebAPI::DBIC::Resource::HAL::Role::Set - add HAL content type support for set resources
 
 =head1 AUTHOR
 

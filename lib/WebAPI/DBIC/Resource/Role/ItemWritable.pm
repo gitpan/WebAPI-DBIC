@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::ItemWritable;
-$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.002003';
+$WebAPI::DBIC::Resource::Role::ItemWritable::VERSION = '0.002004';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -162,7 +162,7 @@ WebAPI::DBIC::Resource::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 

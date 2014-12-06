@@ -2,7 +2,7 @@ NAME
     WebAPI::DBIC
 
 VERSION
-    version 0.002003
+    version 0.002004
 
 DESCRIPTION
     WebAPI::DBIC provides the parts you need to build a feature-rich RESTful
@@ -210,30 +210,30 @@ MODULES
     These roles are used to handle requests using the "application/hal+json"
     media type and follow the naming convention used above.
 
-    WebAPI::DBIC::Resource::Role::DBIC_HAL
+    WebAPI::DBIC::Resource::HAL::Role::DBIC
 
-    WebAPI::DBIC::Resource::Role::SetHAL
+    WebAPI::DBIC::Resource::HAL::Role::Set
 
-    WebAPI::DBIC::Resource::Role::SetWritableHAL
+    WebAPI::DBIC::Resource::HAL::Role::SetWritable
 
-    WebAPI::DBIC::Resource::Role::ItemHAL
+    WebAPI::DBIC::Resource::HAL::Role::Item
 
-    WebAPI::DBIC::Resource::Role::ItemWritableHAL
+    WebAPI::DBIC::Resource::HAL::Role::ItemWritable
 
   JSON API Roles
     These roles are used to handle requests using the
     "application/vnd.api+json" media type and follow the naming convention
     used above.
 
-    WebAPI::DBIC::Resource::Role::DBIC_JSONAPI
+    WebAPI::DBIC::Resource::JSONAPI::Role::DBIC
 
-    WebAPI::DBIC::Resource::Role::SetJSONAPI
+    WebAPI::DBIC::Resource::JSONAPI::Role::Set
 
-    WebAPI::DBIC::Resource::Role::SetWritableJSONAPI
+    WebAPI::DBIC::Resource::JSONAPI::Role::SetWritable
 
-    WebAPI::DBIC::Resource::Role::ItemJSONAPI
+    WebAPI::DBIC::Resource::JSONAPI::Role::Item
 
-    WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI
+    WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable
 
   Utility Roles
     WebAPI::DBIC::Role::JsonEncoder provides encode_json() and decode_json()

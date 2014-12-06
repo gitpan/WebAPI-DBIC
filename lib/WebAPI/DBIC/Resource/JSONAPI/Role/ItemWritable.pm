@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI;
-$WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable;
+$WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable::VERSION = '0.002004';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -91,15 +91,15 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI
+WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI - methods handling JSONAPI requests to update item resources
+WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable - methods handling JSON API requests to update item resources
 
 =head1 AUTHOR
 

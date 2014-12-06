@@ -40,7 +40,6 @@ my %WriteMakefileArgs = (
     "Sub::Exporter" => 0,
     "Sub::Quote" => 0,
     "Try::Tiny" => 0,
-    "Types::Serialiser" => 0,
     "URI" => 0,
     "Web::Machine" => "0.15",
     "namespace::clean" => 0,
@@ -60,9 +59,9 @@ my %WriteMakefileArgs = (
     "ToolSet" => 0,
     "autodie" => 0
   },
-  "VERSION" => "0.002003",
+  "VERSION" => "0.002004",
   "test" => {
-    "TESTS" => "t/*.t"
+    "TESTS" => "t/*.t t/media-hal/*.t t/media-jsonapi/*.t"
   }
 );
 
@@ -99,7 +98,6 @@ my %FallbackPrereqs = (
   "Test::Pod" => 0,
   "ToolSet" => 0,
   "Try::Tiny" => 0,
-  "Types::Serialiser" => 0,
   "URI" => 0,
   "Web::Machine" => "0.15",
   "autodie" => 0,

@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::ItemJSONAPI;
-$WebAPI::DBIC::Resource::Role::ItemJSONAPI::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::JSONAPI::Role::Item;
+$WebAPI::DBIC::Resource::JSONAPI::Role::Item::VERSION = '0.002004';
 
 use Moo::Role;
 
@@ -45,11 +45,11 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemJSONAPI
+WebAPI::DBIC::Resource::JSONAPI::Role::Item
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
@@ -59,7 +59,7 @@ e.g. a single row of a database table.
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::ItemJSONAPI - methods related to handling JSONAPI requests for item resources
+WebAPI::DBIC::Resource::JSONAPI::Role::Item - methods related to handling JSON API requests for item resources
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::DBICException;
-$WebAPI::DBIC::Resource::Role::DBICException::VERSION = '0.002003';
+$WebAPI::DBIC::Resource::Role::DBICException::VERSION = '0.002004';
 
 use Carp qw(croak confess);
 use Scalar::Util qw(blessed);
@@ -108,7 +108,7 @@ WebAPI::DBIC::Resource::Role::DBICException
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 

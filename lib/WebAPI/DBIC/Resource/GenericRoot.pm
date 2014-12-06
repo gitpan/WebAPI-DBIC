@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::GenericRoot;
-$WebAPI::DBIC::Resource::GenericRoot::VERSION = '0.002003';
+$WebAPI::DBIC::Resource::GenericRoot::VERSION = '0.002004';
 
 use Moo;
 use namespace::clean;
@@ -10,7 +10,7 @@ with    'WebAPI::DBIC::Role::JsonEncoder',
         'WebAPI::DBIC::Resource::Role::DBICException',
         # for application/hal+json
         'WebAPI::DBIC::Resource::Role::Root',
-        'WebAPI::DBIC::Resource::Role::RootHAL',
+        'WebAPI::DBIC::Resource::HAL::Role::Root',
         ;
 
 1;
@@ -27,7 +27,7 @@ WebAPI::DBIC::Resource::GenericRoot
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 

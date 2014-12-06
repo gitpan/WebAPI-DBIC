@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.002003';
+$WebAPI::DBIC::VERSION = '0.002004';
 use strict; # keep our kwalitee up!
 use warnings;
 1;
@@ -16,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
@@ -222,30 +222,30 @@ C<prefetch>, C<fields> etc.
 These roles are used to handle requests using the C<application/hal+json> media type
 and follow the naming convention used above.
 
-L<WebAPI::DBIC::Resource::Role::DBIC_HAL>
+L<WebAPI::DBIC::Resource::HAL::Role::DBIC>
 
-L<WebAPI::DBIC::Resource::Role::SetHAL>
+L<WebAPI::DBIC::Resource::HAL::Role::Set>
 
-L<WebAPI::DBIC::Resource::Role::SetWritableHAL>
+L<WebAPI::DBIC::Resource::HAL::Role::SetWritable>
 
-L<WebAPI::DBIC::Resource::Role::ItemHAL>
+L<WebAPI::DBIC::Resource::HAL::Role::Item>
 
-L<WebAPI::DBIC::Resource::Role::ItemWritableHAL>
+L<WebAPI::DBIC::Resource::HAL::Role::ItemWritable>
 
 =head2 JSON API Roles
 
 These roles are used to handle requests using the C<application/vnd.api+json> media type
 and follow the naming convention used above.
 
-L<WebAPI::DBIC::Resource::Role::DBIC_JSONAPI>
+L<WebAPI::DBIC::Resource::JSONAPI::Role::DBIC>
 
-L<WebAPI::DBIC::Resource::Role::SetJSONAPI>
+L<WebAPI::DBIC::Resource::JSONAPI::Role::Set>
 
-L<WebAPI::DBIC::Resource::Role::SetWritableJSONAPI>
+L<WebAPI::DBIC::Resource::JSONAPI::Role::SetWritable>
 
-L<WebAPI::DBIC::Resource::Role::ItemJSONAPI>
+L<WebAPI::DBIC::Resource::JSONAPI::Role::Item>
 
-L<WebAPI::DBIC::Resource::Role::ItemWritableJSONAPI>
+L<WebAPI::DBIC::Resource::JSONAPI::Role::ItemWritable>
 
 =head2 Utility Roles
 

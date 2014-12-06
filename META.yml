@@ -44,7 +44,6 @@ requires:
   Sub::Exporter: '0'
   Sub::Quote: '0'
   Try::Tiny: '0'
-  Types::Serialiser: '0'
   URI: '0'
   Web::Machine: '0.15'
   namespace::clean: '0'
@@ -55,4 +54,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.002003'
+version: '0.002004'

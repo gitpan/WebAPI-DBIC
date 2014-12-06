@@ -1,5 +1,5 @@
 package WebAPI::DBIC::WebApp;
-$WebAPI::DBIC::WebApp::VERSION = '0.002003';
+$WebAPI::DBIC::WebApp::VERSION = '0.002004';
 use Moo;
 
 use Module::Runtime qw(use_module);
@@ -292,7 +292,7 @@ WebAPI::DBIC::WebApp
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 AUTHOR
 

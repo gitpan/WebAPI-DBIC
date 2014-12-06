@@ -1,9 +1,9 @@
-package WebAPI::DBIC::Resource::Role::RootHAL;
-$WebAPI::DBIC::Resource::Role::RootHAL::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::HAL::Role::Root;
+$WebAPI::DBIC::Resource::HAL::Role::Root::VERSION = '0.002004';
 
 use Moo::Role;
 
-use Types::Serialiser;
+use JSON::MaybeXS qw(JSON);
 
 requires '_build_content_types_provided';
 requires 'encode_json';
@@ -38,7 +38,7 @@ sub render_api_as_hal {
             if ($route->is_component_variable($c)) {
                 my $name = $route->get_component_name($c);
                 push @parts, "{/$name}";
-                $attr{templated} = Types::Serialiser::true;
+                $attr{templated} = JSON->true;
             } else {
                 push @parts, "$c";
             }
@@ -67,17 +67,17 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::RootHAL
+WebAPI::DBIC::Resource::HAL::Role::Root
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::RootHAL - provide a description of the API for HAL browser
+WebAPI::DBIC::Resource::HAL::Role::Root - provide a description of the API for HAL browser
 
 =head1 AUTHOR
 

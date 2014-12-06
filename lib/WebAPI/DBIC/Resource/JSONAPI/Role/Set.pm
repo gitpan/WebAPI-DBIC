@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::SetJSONAPI;
-$WebAPI::DBIC::Resource::Role::SetJSONAPI::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::JSONAPI::Role::Set;
+$WebAPI::DBIC::Resource::JSONAPI::Role::Set::VERSION = '0.002004';
 
 use Moo::Role;
 
@@ -37,11 +37,11 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::SetJSONAPI
+WebAPI::DBIC::Resource::JSONAPI::Role::Set
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
@@ -52,7 +52,7 @@ Supports the C<application/vnd.api+json> content type.
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::SetHAL - add JSON API content type support for set resources
+WebAPI::DBIC::Resource::JSONAPI::Role::Set - add JSON API content type support for set resources
 
 =head1 AUTHOR
 

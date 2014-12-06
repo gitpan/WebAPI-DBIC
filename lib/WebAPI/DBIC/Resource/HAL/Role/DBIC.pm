@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::DBIC_HAL;
-$WebAPI::DBIC::Resource::Role::DBIC_HAL::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::HAL::Role::DBIC;
+$WebAPI::DBIC::Resource::HAL::Role::DBIC::VERSION = '0.002004';
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -166,15 +166,15 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::DBIC_HAL
+WebAPI::DBIC::Resource::HAL::Role::DBIC
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::DBIC_HAL - a role with core HAL methods for DBIx::Class resources
+WebAPI::DBIC::Resource::HAL::Role::DBIC - a role with core HAL methods for DBIx::Class resources
 
 =head1 AUTHOR
 

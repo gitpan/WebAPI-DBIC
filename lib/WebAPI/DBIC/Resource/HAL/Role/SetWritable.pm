@@ -1,5 +1,5 @@
-package WebAPI::DBIC::Resource::Role::SetWritableJSONAPI;
-$WebAPI::DBIC::Resource::Role::SetWritableJSONAPI::VERSION = '0.002003';
+package WebAPI::DBIC::Resource::HAL::Role::SetWritable;
+$WebAPI::DBIC::Resource::HAL::Role::SetWritable::VERSION = '0.002004';
 
 use Devel::Dwarn;
 use Carp qw(confess);
@@ -18,20 +18,20 @@ around '_build_content_types_accepted' => sub {
     my $orig = shift;
     my $self = shift;
     my $types = $self->$orig();
-    unshift @$types, { 'application/vnd.api+json' => 'from_jsonapi_json' };
+    unshift @$types, { 'application/hal+json' => 'from_hal_json' };
     return $types;
 };
 
 
-sub from_jsonapi_json {
+sub from_hal_json {
     my $self = shift;
-    my $item = $self->create_resources_from_jsonapi( $self->decode_json($self->request->content) );
+    my $item = $self->create_resources_from_hal( $self->decode_json($self->request->content) );
     return $self->item($item);
 }
 
 
-sub create_resources_from_jsonapi { # XXX unify with create_resource in SetWritable, like ItemWritable?
-    my ($self, $jsonapi) = @_;
+sub create_resources_from_hal { # XXX unify with create_resource in SetWritable, like ItemWritable?
+    my ($self, $hal) = @_;
     my $item;
 
     my $schema = $self->set->result_source->schema;
@@ -39,7 +39,7 @@ sub create_resources_from_jsonapi { # XXX unify with create_resource in SetWrita
     # but it has to be below the auth layer which switches schemas
     $schema->txn_do(sub {
 
-        $item = $self->_create_embedded_resources_from_jsonapi($jsonapi, $self->set->result_class);
+        $item = $self->_create_embedded_resources_from_hal($hal, $self->set->result_class);
 
         # resync with what's (now) in the db to pick up defaulted fields etc
         $item->discard_changes();
@@ -56,15 +56,15 @@ sub create_resources_from_jsonapi { # XXX unify with create_resource in SetWrita
 }
 
 
-# recurse to create resources in $jsonapi->{_embedded}
-#   and update coresponding attributes in $jsonapi
-# then create $jsonapi itself
-sub _create_embedded_resources_from_jsonapi {
-    my ($self, $jsonapi, $result_class) = @_;
+# recurse to create resources in $hal->{_embedded}
+#   and update coresponding attributes in $hal
+# then create $hal itself
+sub _create_embedded_resources_from_hal {
+    my ($self, $hal, $result_class) = @_;
 
-    my $links    = delete $jsonapi->{_links};
-    my $meta     = delete $jsonapi->{_meta};
-    my $embedded = delete $jsonapi->{_embedded} || {};
+    my $links    = delete $hal->{_links};
+    my $meta     = delete $hal->{_meta};
+    my $embedded = delete $hal->{_embedded} || {};
 
     for my $rel (keys %$embedded) {
 
@@ -73,9 +73,9 @@ sub _create_embedded_resources_from_jsonapi {
         die "$result_class _embedded $rel isn't a 'single' relationship\n"
             if $rel_info->{attrs}{accessor} ne 'single';
 
-        my $rel_jsonapi = $embedded->{$rel};
+        my $rel_hal = $embedded->{$rel};
         die "_embedded $rel data is not a hash\n"
-            if ref $rel_jsonapi ne 'HASH';
+            if ref $rel_hal ne 'HASH';
 
         # work out what keys to copy from the subitem we're about to create
         my %fk_map;
@@ -87,21 +87,21 @@ sub _create_embedded_resources_from_jsonapi {
             $fk_map{$our_field} = $sub_field;
 
             die "$result_class already contains a value for '$our_field'\n"
-                if defined $jsonapi->{$our_field}; # null is ok
+                if defined $hal->{$our_field}; # null is ok
         }
 
         # create this subitem (and any resources embedded in it)
-        my $subitem = $self->_create_embedded_resources_from_jsonapi($rel_jsonapi, $rel_info->{source});
+        my $subitem = $self->_create_embedded_resources_from_hal($rel_hal, $rel_info->{source});
 
         # copy the keys of the subitem up to the item we're about to create
         warn "$result_class $rel: propagating keys: @{[ %fk_map ]}\n"
             if $ENV{WEBAPI_DBIC_DEBUG};
         while ( my ($ourfield, $subfield) = each %fk_map) {
-            $jsonapi->{$ourfield} = $subitem->$subfield();
+            $hal->{$ourfield} = $subitem->$subfield();
         }
     }
 
-    return $self->set->result_source->schema->resultset($result_class)->create($jsonapi);
+    return $self->set->result_source->schema->resultset($result_class)->create($hal);
 }
 
 1;
@@ -114,22 +114,22 @@ __END__
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::SetWritableJSONAPI
+WebAPI::DBIC::Resource::HAL::Role::SetWritable
 
 =head1 VERSION
 
-version 0.002003
+version 0.002004
 
 =head1 DESCRIPTION
 
 Handles POST requests for resources representing set resources, e.g. to insert
 rows into a database table.
 
-Supports the C<application/vnd.api+json> and C<application/json> content types.
+Supports the C<application/hal+json> and C<application/json> content types.
 
 =head1 NAME
 
-WebAPI::DBIC::Resource::Role::SetWritableJSONAPI - methods handling JSON API requests to update set resources
+WebAPI::DBIC::Resource::HAL::Role::SetWritable - methods handling HAL requests to update set resources
 
 =head1 AUTHOR
 
