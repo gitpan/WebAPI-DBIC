@@ -1,5 +1,5 @@
 package WebAPI::DBIC;
-$WebAPI::DBIC::VERSION = '0.002004';
+$WebAPI::DBIC::VERSION = '0.002005';
 use strict; # keep our kwalitee up!
 use warnings;
 1;
@@ -16,7 +16,7 @@ WebAPI::DBIC
 
 =head1 VERSION
 
-version 0.002004
+version 0.002005
 
 =head1 DESCRIPTION
 

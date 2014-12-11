@@ -21,6 +21,7 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010",
   "NAME" => "WebAPI::DBIC",
   "PREREQ_PM" => {
+    "Alien::Web::HalBrowser" => 0,
     "Carp" => 0,
     "DBIx::Class" => "0.08250",
     "Data::Dumper::Concise" => 0,
@@ -59,7 +60,7 @@ my %WriteMakefileArgs = (
     "ToolSet" => 0,
     "autodie" => 0
   },
-  "VERSION" => "0.002004",
+  "VERSION" => "0.002005",
   "test" => {
     "TESTS" => "t/*.t t/media-hal/*.t t/media-jsonapi/*.t"
   }
@@ -67,6 +68,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "Alien::Web::HalBrowser" => 0,
   "Carp" => 0,
   "DBIx::Class" => "0.08250",
   "DBIx::Class::Fixtures" => "1.001025",
