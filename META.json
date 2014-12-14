@@ -55,6 +55,7 @@
       },
       "test" : {
          "requires" : {
+            "Cpanel::JSON::XS" : ">= 3.0110, != 3.0112",
             "DBIx::Class::Fixtures" : "1.001025",
             "Data::Printer" : "0",
             "Module::Pluggable" : "0",
@@ -83,6 +84,6 @@
       },
       "x_IRC" : "irc://irc.perl.org/#webapi"
    },
-   "version" : "0.002006"
+   "version" : "0.002007"
 }
 

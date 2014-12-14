@@ -1,5 +1,10 @@
 Changes file for WebAPI::DBIC
 
+0.002007  2014-12-14 22:29:58+00:00 Europe/Dublin
+
+ - Add dependency on Cpanel::JSON::XS to preserve numerics in JSON #21
+ - Add a CONTRIBUTING file, based on ETHER's
+
 0.002006  2014-12-14 16:41:01+00:00 Europe/Dublin
 
   - Added WebAPI::DBIC::Route class and refactored ::WebApp to use it.

@@ -43,4 +43,5 @@ on test => sub {
    requires 'ToolSet';
    requires 'Data::Printer';
    requires 'DBIx::Class::Fixtures', '1.001025';
+   requires 'Cpanel::JSON::XS', '>= 3.0110, != 3.0112'; # https://github.com/timbunce/WebAPI-DBIC/issues/21
 };

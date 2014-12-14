@@ -3,6 +3,7 @@ abstract: 'A composable RESTful JSON API to DBIx::Class schemas using roles and 
 author:
   - 'Tim Bunce <Tim.Bunce@pobox.com>'
 build_requires:
+  Cpanel::JSON::XS: '>= 3.0110, != 3.0112'
   DBIx::Class::Fixtures: '1.001025'
   Data::Printer: '0'
   Module::Pluggable: '0'
@@ -55,4 +56,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.002006'
+version: '0.002007'

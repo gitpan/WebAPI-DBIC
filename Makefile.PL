@@ -47,6 +47,7 @@ my %WriteMakefileArgs = (
     "parent" => 0
   },
   "TEST_REQUIRES" => {
+    "Cpanel::JSON::XS" => ">= 3.0110, != 3.0112",
     "DBIx::Class::Fixtures" => "1.001025",
     "Data::Printer" => 0,
     "Module::Pluggable" => 0,
@@ -60,7 +61,7 @@ my %WriteMakefileArgs = (
     "ToolSet" => 0,
     "autodie" => 0
   },
-  "VERSION" => "0.002006",
+  "VERSION" => "0.002007",
   "test" => {
     "TESTS" => "t/*.t t/media-hal/*.t t/media-jsonapi/*.t"
   }
@@ -69,6 +70,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Alien::Web::HalBrowser" => 0,
+  "Cpanel::JSON::XS" => ">= 3.0110, != 3.0112",
   "DBD::SQLite" => "1.46",
   "DBIx::Class" => "0.08250",
   "DBIx::Class::Fixtures" => "1.001025",
