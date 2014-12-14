@@ -45,6 +45,7 @@ lib/WebAPI/DBIC/Resource/Role/Set.pm
 lib/WebAPI/DBIC/Resource/Role/SetWritable.pm
 lib/WebAPI/DBIC/Role/JsonEncoder.pm
 lib/WebAPI/DBIC/Role/JsonParams.pm
+lib/WebAPI/DBIC/Route.pm
 lib/WebAPI/DBIC/Router.pm
 lib/WebAPI/DBIC/Util.pm
 lib/WebAPI/DBIC/WebApp.pm

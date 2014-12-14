@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::HAL::Role::Root;
-$WebAPI::DBIC::Resource::HAL::Role::Root::VERSION = '0.002005';
+$WebAPI::DBIC::Resource::HAL::Role::Root::VERSION = '0.002006';
 
 use Moo::Role;
 
@@ -45,10 +45,12 @@ sub render_api_as_hal {
         }
         next unless @parts;
 
+        my $title = join(" ", (split /::/, $route->defaults->{result_class})[-3,-1]);
+
         my $url = $path . join("", @parts);
         $links{join("", @parts)} = {
             href => $url,
-            title => $route->defaults->{_title}||"",
+            title => $title,
             %attr
         };
     }
@@ -71,7 +73,7 @@ WebAPI::DBIC::Resource::HAL::Role::Root
 
 =head1 VERSION
 
-version 0.002005
+version 0.002006
 
 =head1 DESCRIPTION
 

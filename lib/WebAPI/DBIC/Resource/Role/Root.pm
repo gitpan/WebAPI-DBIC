@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Role::Root;
-$WebAPI::DBIC::Resource::Role::Root::VERSION = '0.002005';
+$WebAPI::DBIC::Resource::Role::Root::VERSION = '0.002006';
 
 use Moo::Role;
 
@@ -58,7 +58,8 @@ sub render_root_as_plain { # informal JSON description, XXX liable to change
 
         my $url = $path . join("/", @parts);
         die "Duplicate path: $url" if $links{$url};
-        $links{$url} = $route->defaults->{_title}||"";
+        my $title = join(" ", (split /::/, $route->defaults->{result_class})[-3,-1]);
+        $links{$url} = $title;
     }
 
     return {
@@ -80,7 +81,7 @@ WebAPI::DBIC::Resource::Role::Root
 
 =head1 VERSION
 
-version 0.002005
+version 0.002006
 
 =head1 DESCRIPTION
 

@@ -8,7 +8,7 @@ build_requires:
   Module::Pluggable: '0'
   Sort::Key: '0'
   Test::Compile: v1.1.0
-  Test::DBIx::Class: '0'
+  Test::DBIx::Class: '0.43'
   Test::HTTP::Response: '0'
   Test::More: '0.98'
   Test::Most: '0'
@@ -26,7 +26,7 @@ meta-spec:
 name: WebAPI-DBIC
 requires:
   Alien::Web::HalBrowser: '0'
-  Carp: '0'
+  DBD::SQLite: '1.46'
   DBIx::Class: '0.08250'
   Data::Dumper::Concise: '0'
   HTTP::Headers::ActionPack: '0'
@@ -55,4 +55,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.002005'
+version: '0.002006'

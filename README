@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution WebAPI-DBIC,
-version 0.002005:
+version 0.002006:
 
   A composable RESTful JSON API to DBIx::Class schemas using roles and Web::Machine
 
