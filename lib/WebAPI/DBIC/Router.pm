@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Router;
-$WebAPI::DBIC::Router::VERSION = '0.002007';
+$WebAPI::DBIC::Router::VERSION = '0.003001'; # TRIAL
 
 use Moo;
 
@@ -12,6 +12,7 @@ use Plack::App::Path::Router;
 has router => (
     is => 'ro',
     default => sub { Path::Router->new },
+    handles => [ qw(match) ],
 );
 
 
@@ -57,7 +58,7 @@ WebAPI::DBIC::Router
 
 =head1 VERSION
 
-version 0.002007
+version 0.003001
 
 =head1 DESCRIPTION
 

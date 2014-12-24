@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::Base;
-$WebAPI::DBIC::Resource::Base::VERSION = '0.002007';
+$WebAPI::DBIC::Resource::Base::VERSION = '0.003001'; # TRIAL
 
 use Moo;
 extends 'Web::Machine::Resource';
@@ -9,6 +9,7 @@ require WebAPI::HTTP::Throwable::Factory;
 
 has http_auth_type => (
    is => 'ro',
+   default => 'Basic',
 );
 
 has throwable => (
@@ -31,7 +32,7 @@ WebAPI::DBIC::Resource::Base
 
 =head1 VERSION
 
-version 0.002007
+version 0.003001
 
 =head1 DESCRIPTION
 

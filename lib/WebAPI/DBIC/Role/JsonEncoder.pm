@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Role::JsonEncoder;
-$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.002007';
+$WebAPI::DBIC::Role::JsonEncoder::VERSION = '0.003001'; # TRIAL
 
 use JSON::MaybeXS qw(JSON);
 
@@ -15,7 +15,11 @@ has _json_encoder => (
    },
 );
 
-sub _build_json_encoder { return JSON->new->ascii }
+sub _build_json_encoder {
+    my $codec = JSON->new->ascii;
+    $codec->canonical->pretty if $ENV{WEBAPI_DBIC_DEBUG};
+    return $codec;
+}
 
 1;
 
@@ -31,7 +35,7 @@ WebAPI::DBIC::Role::JsonEncoder
 
 =head1 VERSION
 
-version 0.002007
+version 0.003001
 
 =head1 NAME
 

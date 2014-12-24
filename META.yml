@@ -33,6 +33,8 @@ requires:
   HTTP::Headers::ActionPack: '0'
   HTTP::Throwable: '0'
   JSON::MaybeXS: '0'
+  Lingua::EN::Inflect: '1.894'
+  Lingua::EN::Inflect::Number: '1.11'
   List::Util: '0'
   Module::Runtime: '0'
   Moo: '1.001000'
@@ -45,6 +47,7 @@ requires:
   String::CamelCase: '0'
   Sub::Exporter: '0'
   Sub::Quote: '0'
+  Sub::Util: '0'
   Try::Tiny: '0'
   URI: '0'
   Web::Machine: '0.15'
@@ -56,4 +59,4 @@ resources:
   bugtracker: https://github.com/timbunce/WebAPI-DBIC/issues
   homepage: https://github.com/timbunce/WebAPI-DBIC
   repository: https://github.com/timbunce/WebAPI-DBIC.git
-version: '0.002007'
+version: '0.003001'

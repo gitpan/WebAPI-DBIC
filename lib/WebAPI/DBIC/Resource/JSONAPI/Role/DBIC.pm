@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::JSONAPI::Role::DBIC;
-$WebAPI::DBIC::Resource::JSONAPI::Role::DBIC::VERSION = '0.002007';
+$WebAPI::DBIC::Resource::JSONAPI::Role::DBIC::VERSION = '0.003001'; # TRIAL
 
 use Carp qw(croak confess);
 use Devel::Dwarn;
@@ -13,27 +13,13 @@ requires 'render_item_as_plain_hash';
 requires 'path_for_item';
 requires 'add_params_to_url';
 requires 'prefetch';
+requires 'type_namer';
 
 
-my %result_class_to_jsonapi_type; # XXX ought to live elsewhere
 
-
-sub jsonapi_type { # XXX this is a hack - needs more thought
+sub jsonapi_type {
     my ($self) = @_;
-    my $result_class = $self->set->result_source->result_class;
-    my $path = $self->jsonapi_type_for_result_class($result_class)
-        or confess sprintf("panic: no route found to %s result_class %s",
-            $self, $result_class
-        );
-    return $path;
-}
-sub jsonapi_type_for_result_class { # XXX this is a hack - needs more thought
-    my ($self, $result_class) = @_;
-    my $url = $self->uri_for(result_class => $result_class)
-        or return undef;
-    my $path = URI->new($url,'http')->path;
-    $path =~ s!^/([^/]+)!$1! or die "panic: Can't get jsonapi_type from $path";
-    return $path;
+    return $self->type_namer->type_name_for_resultset($self->set);
 }
 
 
@@ -50,8 +36,7 @@ sub top_link_for_relname { # XXX cacheable
     my $rel_info = $self->set->result_class->relationship_info($relname);
     my $result_class = $rel_info->{class}||die "panic";
 
-    my $rel_jsonapi_type = $result_class_to_jsonapi_type{$result_class}
-        ||= $self->jsonapi_type_for_result_class($result_class);
+    my $rel_jsonapi_type = $self->type_namer->type_name_for_result_class($result_class);
 
     my $path = $self->jsonapi_type .".". $relname;
     return $path => {
@@ -91,10 +76,14 @@ sub render_jsonapi_response { # return top-level document hashref
                 or next;
             $top_links{$top_link_key} = $top_link_value;
 
+            my $rel_typename = $self->type_namer->type_name_for_result_class($rel_info->{class});
+
             $item_edit_rel_hooks{$relname} = sub { 
                 my ($jsonapi_obj, $row) = @_;
 
                 my $subitem = $row->$relname();
+
+                my $compound_links_for_rel = $compound_links{$rel_typename} ||= {};
 
                 my $link_keys;
                 if (not defined $subitem) {
@@ -105,18 +94,18 @@ sub render_jsonapi_response { # return top-level document hashref
                     while (my $subrow = $subitem->next) {
                         my $id = $subrow->id;
                         push @$link_keys, $id;
-                        $compound_links{$relname}{$id} = $self->render_item_as_jsonapi_hash($subrow); # XXX typename
+                        $compound_links_for_rel->{$id} = $self->render_item_as_jsonapi_hash($subrow); # XXX typename
                     }
                 }
                 elsif ($subitem->isa('DBIx::Class::Row')) { # one-to-many rel
                     $link_keys = $subitem->id;
-                    $compound_links{$relname}{$subitem->id} = $self->render_item_as_jsonapi_hash($subitem); # XXX typename
+                    $compound_links_for_rel->{$subitem->id} = $self->render_item_as_jsonapi_hash($subitem); # XXX typename
                 }
                 else {
                     die "panic: don't know how to handle $row $relname value $subitem";
                 }
 
-                $jsonapi_obj->{links}{$relname} = $link_keys;
+                $jsonapi_obj->{links}{$rel_typename} = $link_keys;
             }
         }
     }
@@ -126,14 +115,22 @@ sub render_jsonapi_response { # return top-level document hashref
         $_->($jsonapi_obj, $row) for values %item_edit_rel_hooks;
     });
 
-    my $set_key = ($self->param('distinct')) ? 'data' : $self->jsonapi_type;
+    # construct top document to return
+    my $top_set_key = ($self->param('distinct')) ? 'data' : $self->jsonapi_type;
     my $top_doc = { # http://jsonapi.org/format/#document-structure-top-level
-        $set_key => $set_data,
+        $top_set_key => $set_data,
     };
-    $top_doc->{links} = \%top_links if keys %top_links;
-    while ( my ($k, $v) = each %compound_links) {
-        my @ids = sort keys %$v; # sort just for test stability,
-        $top_doc->{linked}{$k} = [ @{$v}{@ids} ]; # else just [ values %$v ] would do
+
+    if (keys %top_links) {
+        $top_doc->{links} = \%top_links
+    }
+
+    if (keys %compound_links) {
+        #Dwarn \%compound_links;
+        while ( my ($k, $v) = each %compound_links) {
+            # sort just for test stability,
+            $top_doc->{linked}{$k} = [ @{$v}{ sort keys %$v } ];
+        }
     }
 
     my $total_items;
@@ -153,7 +150,7 @@ sub render_item_as_jsonapi_hash {
     my $data = $self->render_item_as_plain_hash($item);
 
     $data->{id} //= $item->id;
-    $data->{type} = $self->jsonapi_type_for_result_class($item->result_source->result_class);
+    $data->{type} = $self->type_namer->type_name_for_result_class($item->result_source->result_class);
     $data->{href} = $self->path_for_item($item);
 
     #$self->_render_prefetch_jsonapi($item, $data, $_) for @{$self->prefetch||[]};
@@ -257,7 +254,7 @@ WebAPI::DBIC::Resource::JSONAPI::Role::DBIC
 
 =head1 VERSION
 
-version 0.002007
+version 0.003001
 
 =head1 NAME
 

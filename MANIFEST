@@ -47,7 +47,9 @@ lib/WebAPI/DBIC/Resource/Role/SetWritable.pm
 lib/WebAPI/DBIC/Role/JsonEncoder.pm
 lib/WebAPI/DBIC/Role/JsonParams.pm
 lib/WebAPI/DBIC/Route.pm
+lib/WebAPI/DBIC/RouteMaker.pm
 lib/WebAPI/DBIC/Router.pm
+lib/WebAPI/DBIC/TypeNamer.pm
 lib/WebAPI/DBIC/Util.pm
 lib/WebAPI/DBIC/WebApp.pm
 lib/WebAPI/HTTP/Throwable/Factory.pm
@@ -91,9 +93,9 @@ t/etc/fixtures/basic/genre/1.fix
 t/etc/fixtures/basic/genre/2.fix
 t/etc/fixtures/basic/genre/3.fix
 t/etc/fixtures/basic/genre/4.fix
-t/etc/fixtures/basic/gig/1-2014-01-01T01:01:01Z.fix
-t/etc/fixtures/basic/gig/2-2014-06-30T19:00:00Z.fix
-t/etc/fixtures/basic/gig/3-2014-06-30T13:00:00Z.fix
+t/etc/fixtures/basic/gig/1-2014-01-01T01_01_01Z.fix
+t/etc/fixtures/basic/gig/2-2014-06-30T19_00_00Z.fix
+t/etc/fixtures/basic/gig/3-2014-06-30T13_00_00Z.fix
 t/etc/fixtures/basic/producer/1.fix
 t/etc/fixtures/basic/producer/2.fix
 t/etc/fixtures/basic/producer/3.fix

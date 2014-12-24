@@ -1,5 +1,5 @@
 package WebAPI::DBIC::Resource::HAL::Role::Root;
-$WebAPI::DBIC::Resource::HAL::Role::Root::VERSION = '0.002007';
+$WebAPI::DBIC::Resource::HAL::Role::Root::VERSION = '0.003001'; # TRIAL
 
 use Moo::Role;
 
@@ -73,7 +73,7 @@ WebAPI::DBIC::Resource::HAL::Role::Root
 
 =head1 VERSION
 
-version 0.002007
+version 0.003001
 
 =head1 DESCRIPTION
 
